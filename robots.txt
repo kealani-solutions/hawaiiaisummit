@@ -1,0 +1,6 @@
+# robots.txt for Hawaii Island AI Summit
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://hawaiiaisummit.com/sitemap.xml
