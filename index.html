@@ -841,6 +841,21 @@
       font-family: inherit;
     }
 
+    .form-success {
+      color: #4ade80;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+      padding: 16px 0;
+    }
+
+    .form-error {
+      color: #f87171;
+      font-size: 1rem;
+      margin: 0;
+      padding: 16px 0;
+    }
+
     .footer-bottom {
       text-align: center;
       padding-top: 40px;
@@ -1002,7 +1017,7 @@
   <section class="value-prop">
     <div class="container">
       <div class="section-intro fade-in">
-        <p>"Join Hawaii's tech and business community for a day of hands-on workshops, inspiring conversations, and meaningful connections. Walk away with practical AI skills you can use right away."</p>
+        <p>Join Hawaii's tech and business community for a day of hands-on workshops, inspiring conversations, and meaningful connections. Walk away with practical AI skills you can use right away.</p>
       </div>
 
       <div class="benefits-grid">
@@ -1027,7 +1042,7 @@
             <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
           </svg>
           <h3>Practical AI Skills</h3>
-          <p>Take away tools you can use Monday morning.</p>
+          <p>Take away tools you can use immediately.</p>
         </div>
 
         <div class="benefit-card fade-in">
@@ -1311,11 +1326,11 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-logos">
-        <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
-        <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
-        <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
-        <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
-        <img src="images/logos/nimblebrain_logo_white.png" alt="Nimble Brain">
+        <a href="https://kealanisolutions.com" target="_blank" rel="noopener noreferrer"><img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions"></a>
+        <a href="https://www.hawaiiwomenintech.org/" target="_blank" rel="noopener noreferrer"><img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech"></a>
+        <a href="https://hawaiiai.org/" target="_blank" rel="noopener noreferrer"><img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI"></a>
+        <a href="https://www.bigislandtech.org/" target="_blank" rel="noopener noreferrer"><img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech"></a>
+        <a href="https://www.nimblebrain.ai/" target="_blank" rel="noopener noreferrer"><img src="images/logos/nimblebrain_logo_white.png" alt="Nimble Brain"></a>
       </div>
 
       <div class="footer-signup">
@@ -1405,6 +1420,26 @@
       '&dates=20260312T110000/20260312T180000' +
       '&details=' + encodeURIComponent('Join Hawaii\'s tech and business community for hands-on AI workshops. https://hawaiiaisummit.com') +
       '&location=' + encodeURIComponent('Arc of Hilo, 1099 Waianuenue Avenue, Hilo, HI 96720');
+
+    // Form Submission Handling
+    document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+
+        try {
+          await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+          });
+
+          form.innerHTML = '<p class="form-success">We will reserve your spot, excited to see you!</p>';
+        } catch (error) {
+          form.innerHTML = '<p class="form-error">Something went wrong. Please try again.</p>';
+        }
+      });
+    });
   </script>
 </body>
 </html>
