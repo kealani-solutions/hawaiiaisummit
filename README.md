@@ -2,6 +2,7 @@
 
 Landing page for the Hawaii Island AI Summit, a hands-on AI workshop event for Hawaii's tech and business community.
 
+**Live Site:** https://hawaiiaisummit.com
 **Date:** March 12, 2026
 **Location:** Arc of Hilo, Hawaii
 
