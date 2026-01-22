@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sponsorship Opportunities | Hawaii Island AI Summit 2026</title>
+  <meta name="description"
+    content="Partner with us as a sponsor to advance AI education, workforce development, and innovation across Hawaii Island. Community sponsorship packages from $200-$1,500.">
+  <meta name="author" content="Kealani Solutions">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logos/AI_transparent_small.png">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sponsor the Hawaii Island AI Summit 2026">
+  <meta property="og:description"
+    content="Partner with us to advance AI education and workforce development across Hawaii Island. Connect with emerging talent and local leaders.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hawaiiaisummit.com/sponsors.html">
+  <meta property="og:site_name" content="Hawaii Island AI Summit">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ========================================
+       CSS Custom Properties
+       ======================================== */
+    :root {
+      --color-primary: #006877;
+      --color-primary-light: #00D4E8;
+      --color-secondary: #FF7F50;
+      --color-secondary-light: #FF9A70;
+      --color-accent: #FFD93D;
+      --color-gold: #D4AF37;
+      --color-silver: #C0C0C0;
+      --color-bronze: #CD7F32;
+      --color-white: #FAFAFA;
+      --color-cream: #F5F3EF;
+      --color-dark: #1A1A1A;
+      --color-gray: #2D3132;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-width: 1100px;
+    }
+
+    /* ========================================
+       Reset & Base
+       ======================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-dark);
+      line-height: 1.7;
+      background: var(--color-cream);
+      font-weight: 400;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ========================================
+       Header Navigation (inside hero)
+       ======================================== */
+    .hero-nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .nav-logo {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--color-white);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 0.7;
+    }
+
+    /* ========================================
+       Hero Section
+       ======================================== */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 40px 80px;
+      position: relative;
+      background: linear-gradient(165deg, var(--color-primary) 0%, #004d5a 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 80%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(255, 127, 80, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to top, var(--color-cream), transparent);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 500;
+      color: var(--color-white);
+      line-height: 1.15;
+      margin-bottom: 32px;
+      max-width: 800px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 680px;
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========================================
+       Section Layout
+       ======================================== */
+    .section {
+      padding: 100px 40px;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-secondary);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 500;
+      color: var(--color-dark);
+      line-height: 1.2;
+    }
+
+    /* ========================================
+       Sponsor Tiers - Editorial Cards
+       ======================================== */
+    .tiers {
+      background: var(--color-white);
+    }
+
+    .tier-grid {
+      display: grid;
+      gap: 40px;
+    }
+
+    .tier-card {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      background: var(--color-cream);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 104, 119, 0.12);
+    }
+
+    .tier-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .tier-card.gold::before { background: linear-gradient(180deg, var(--color-gold), #B8960C); }
+    .tier-card.silver::before { background: linear-gradient(180deg, var(--color-silver), #A0A0A0); }
+    .tier-card.bronze::before { background: linear-gradient(180deg, var(--color-bronze), #A66928); }
+    .tier-card.community::before { background: linear-gradient(180deg, var(--color-primary), var(--color-primary-light)); }
+
+    .tier-header {
+      padding: 48px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .tier-card.gold .tier-header { background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.05) 100%); }
+    .tier-card.silver .tier-header { background: linear-gradient(135deg, rgba(192, 192, 192, 0.15) 0%, rgba(192, 192, 192, 0.05) 100%); }
+    .tier-card.bronze .tier-header { background: linear-gradient(135deg, rgba(205, 127, 50, 0.12) 0%, rgba(205, 127, 50, 0.05) 100%); }
+    .tier-card.community .tier-header { background: linear-gradient(135deg, rgba(0, 104, 119, 0.08) 0%, rgba(0, 212, 232, 0.03) 100%); }
+
+    .tier-name-hawaiian {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--color-dark);
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+
+    .tier-name-english {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-gray);
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+
+    .tier-price {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    .tier-availability {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--color-secondary);
+      margin-top: 8px;
+    }
+
+    .tier-tickets {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background: var(--color-white);
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    .tier-tickets svg {
+      width: 18px;
+      height: 18px;
+      color: var(--color-secondary);
+    }
+
+    .tier-content {
+      padding: 48px 44px;
+      border-left: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .tier-benefits {
+      list-style: none;
+    }
+
+    .tier-benefits li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      color: var(--color-gray);
+      line-height: 1.6;
+    }
+
+    .tier-benefits li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      background: var(--color-primary-light);
+      border-radius: 50%;
+    }
+
+    .tier-benefits li:last-child {
+      margin-bottom: 0;
+    }
+
+    .tier-highlight {
+      font-weight: 600;
+      color: var(--color-dark);
+    }
+
+    /* ========================================
+       Experience Sponsorships
+       ======================================== */
+    .experiences {
+      background: var(--color-cream);
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .experience-card {
+      background: var(--color-white);
+      padding: 40px 32px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 104, 119, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .experience-card:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 12px 40px rgba(0, 104, 119, 0.1);
+    }
+
+    .experience-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(0, 104, 119, 0.1), rgba(0, 212, 232, 0.05));
+      border-radius: 12px;
+      margin-bottom: 24px;
+      color: var(--color-primary);
+    }
+
+    .experience-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .experience-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--color-dark);
+      margin-bottom: 8px;
+    }
+
+    .experience-price {
+      font-family: var(--font-body);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+    }
+
+    .experience-availability {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-secondary);
+      margin-bottom: 20px;
+    }
+
+    .experience-description {
+      font-size: 0.9rem;
+      color: var(--color-gray);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .experience-includes {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-gray);
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .experience-benefits {
+      list-style: none;
+    }
+
+    .experience-benefits li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      font-size: 0.88rem;
+      color: var(--color-gray);
+    }
+
+    .experience-benefits li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-primary-light);
+      font-weight: 700;
+    }
+
+    /* ========================================
+       CTA Section
+       ======================================== */
+    .cta {
+      background: var(--color-dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 500;
+      color: var(--color-white);
+      margin-bottom: 20px;
+    }
+
+    .cta-description {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--color-secondary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-secondary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 127, 80, 0.3);
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ========================================
+       Footer
+       ======================================== */
+    .footer {
+      padding: 60px 40px;
+      background: var(--color-dark);
+      text-align: center;
+    }
+
+    .footer-logo {
+      height: 70px;
+      width: auto;
+      margin: 0 auto 24px;
+      opacity: 0.9;
+    }
+
+    .footer-link {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--color-primary-light);
+    }
+
+    .footer-copyright {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 24px;
+    }
+
+    /* ========================================
+       Responsive
+       ======================================== */
+    @media (max-width: 1024px) {
+      .tier-card {
+        grid-template-columns: 1fr;
+      }
+
+      .tier-header {
+        padding: 36px;
+      }
+
+      .tier-content {
+        padding: 36px;
+        border-left: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .experience-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-nav {
+        padding: 20px 24px;
+      }
+
+      .hero {
+        padding: 80px 24px 60px;
+      }
+
+      .section {
+        padding: 70px 24px;
+      }
+
+      .tier-header,
+      .tier-content {
+        padding: 28px 24px;
+      }
+
+      .experience-card {
+        padding: 32px 24px;
+      }
+    }
+
+    /* ========================================
+       Print Styles
+       ======================================== */
+    @media print {
+      .hero-nav { display: none; }
+
+      body {
+        background: white;
+        color: black;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 40px;
+        background: none;
+        color: black;
+      }
+
+      .hero-title,
+      .hero-description,
+      .hero-eyebrow {
+        color: black;
+      }
+
+      .tier-card,
+      .experience-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+
+      .cta {
+        background: none;
+        color: black;
+      }
+
+      .cta-title,
+      .cta-description {
+        color: black;
+      }
+
+      .btn { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <!-- Navigation -->
+    <nav class="hero-nav">
+      <a href="index.html">
+        <img src="images/logos/event_logo_wide.png" alt="Hawaii Island AI Summit" class="nav-logo">
+      </a>
+      <a href="index.html" class="nav-link">← Back to Summit</a>
+    </nav>
+    <span class="hero-eyebrow">March 12, 2026 · Arc of Hilo</span>
+    <h1 class="hero-title">Community Sponsorship Opportunities</h1>
+    <p class="hero-description">
+      Partner with us as a sponsor to advance AI education, workforce development, and innovation across Hawaii Island.
+      Your support helps deliver a high-quality, hands-on summit while keeping tickets accessible—connecting your organization
+      with emerging talent, local leaders, and a future-ready Hawaiʻi tech community.
+    </p>
+  </section>
+
+  <!-- Tiered Sponsorships -->
+  <section class="section tiers">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-eyebrow">Sponsorship Tiers</span>
+        <h2 class="section-title">Become a Summit Partner</h2>
+      </header>
+
+      <div class="tier-grid">
+        <!-- 'Ohana Sponsor -->
+        <article class="tier-card gold">
+          <div class="tier-header">
+            <h3 class="tier-name-hawaiian">'Ohana Sponsor</h3>
+            <span class="tier-name-english">Gold Sponsor</span>
+            <div class="tier-price">$1,500</div>
+            <span class="tier-availability">One Available</span>
+            <div class="tier-tickets">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
+              </svg>
+              8 Reserved Tickets
+            </div>
+          </div>
+          <div class="tier-content">
+            <ul class="tier-benefits">
+              <li><span class="tier-highlight">Primary sponsor logo placement</span> on the event website, with the option to include a short video representing your organization that may be played during the event</li>
+              <li><span class="tier-highlight">"Presented by" recognition</span> across event materials</li>
+              <li>Logo on signage and opening/closing slides</li>
+              <li>Verbal acknowledgment during opening remarks</li>
+              <li><span class="tier-highlight">Opportunity to introduce a keynote</span> or curated fireside chat</li>
+              <li>Prime exhibitor tabletop space designed for conversation, learning, and community connection</li>
+              <li>Inclusion in post-event recap communications</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Koa Sponsor -->
+        <article class="tier-card silver">
+          <div class="tier-header">
+            <h3 class="tier-name-hawaiian">Koa Sponsor</h3>
+            <span class="tier-name-english">Silver Sponsor</span>
+            <div class="tier-price">$750</div>
+            <span class="tier-availability">Two Available</span>
+            <div class="tier-tickets">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
+              </svg>
+              6 Reserved Tickets
+            </div>
+          </div>
+          <div class="tier-content">
+            <ul class="tier-benefits">
+              <li>Logo on event website and signage</li>
+              <li>Verbal acknowledgment during the program</li>
+              <li>Opportunity to provide a branded resource or giveaway</li>
+              <li>Inclusion in post-event thank-you communications</li>
+              <li><span class="tier-highlight">Exhibitor tabletop space</span> designed for conversation, learning, and community connection:</li>
+              <li style="margin-left: 20px;">Share your organization's work</li>
+              <li style="margin-left: 20px;">Connect with attendees</li>
+              <li style="margin-left: 20px;">Support local workforce development</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Mana Sponsor -->
+        <article class="tier-card bronze">
+          <div class="tier-header">
+            <h3 class="tier-name-hawaiian">Mana Sponsor</h3>
+            <span class="tier-name-english">Bronze Sponsor</span>
+            <div class="tier-price">$400</div>
+            <span class="tier-availability">Three Available</span>
+            <div class="tier-tickets">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
+              </svg>
+              4 Reserved Tickets
+            </div>
+          </div>
+          <div class="tier-content">
+            <ul class="tier-benefits">
+              <li>Logo on event website and signage</li>
+              <li>Verbal acknowledgment during the program</li>
+              <li><span class="tier-highlight">Exhibitor tabletop space</span> designed for conversation, learning, and community connection:</li>
+              <li style="margin-left: 20px;">Share your organization's work</li>
+              <li style="margin-left: 20px;">Connect with attendees</li>
+              <li style="margin-left: 20px;">Support local workforce development</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Tabletop Sponsor -->
+        <article class="tier-card community">
+          <div class="tier-header">
+            <h3 class="tier-name-hawaiian">Tabletop Sponsor</h3>
+            <span class="tier-name-english">Community Sponsor</span>
+            <div class="tier-price">$200</div>
+            <span class="tier-availability">Available</span>
+            <div class="tier-tickets">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
+              </svg>
+              1 Reserved Ticket
+            </div>
+          </div>
+          <div class="tier-content">
+            <ul class="tier-benefits">
+              <li><span class="tier-highlight">Exhibitor tabletop space</span> designed for conversation, learning, and community connection:</li>
+              <li style="margin-left: 20px;">Share your organization's work</li>
+              <li style="margin-left: 20px;">Connect with attendees</li>
+              <li style="margin-left: 20px;">Support local workforce development</li>
+              <li>Name listed on the event website under Community Sponsors</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Sponsorships -->
+  <section class="section experiences">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-eyebrow">Experience Sponsorships</span>
+        <h2 class="section-title">Sponsor a Summit Moment</h2>
+      </header>
+
+      <div class="experience-grid">
+        <!-- Coffee/Networking -->
+        <article class="experience-card">
+          <div class="experience-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+            </svg>
+          </div>
+          <h3 class="experience-name">Ho'olauna Coffee & Networking</h3>
+          <div class="experience-price">$350</div>
+          <span class="experience-availability">1 Available</span>
+          <p class="experience-description">
+            Support the summit by underwriting attendee networking opportunities, while creating space for informal connection and conversation.
+          </p>
+          <span class="experience-includes">Includes</span>
+          <ul class="experience-benefits">
+            <li>Recognition as Coffee/Networking Sponsor on event signage and website</li>
+            <li>Verbal acknowledgment during breaks</li>
+            <li>Logo placement near coffee/break area</li>
+            <li>2 complimentary summit tickets</li>
+          </ul>
+        </article>
+
+        <!-- Lunch -->
+        <article class="experience-card">
+          <div class="experience-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.87c1.355 0 2.697.055 4.024.165C17.155 8.51 18 9.473 18 10.608v2.513m-3-4.87v-1.5m-6 1.5v-1.5m12 9.75l-1.5.75a3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0L3 16.5m18-4.5a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="experience-name">Lunch Sponsor</h3>
+          <div class="experience-price">$1,500</div>
+          <span class="experience-availability">1 Available</span>
+          <p class="experience-description">
+            Support the summit by underwriting attendee lunches, helping us keep registration accessible while creating space for informal connection and conversation.
+          </p>
+          <span class="experience-includes">Includes</span>
+          <ul class="experience-benefits">
+            <li>Recognition as Lunch Sponsor on event signage and website</li>
+            <li>Verbal acknowledgment during lunch break</li>
+            <li>Logo placement near lunch area</li>
+            <li>6 complimentary summit tickets</li>
+          </ul>
+        </article>
+
+        <!-- Pau Hana -->
+        <article class="experience-card">
+          <div class="experience-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+            </svg>
+          </div>
+          <h3 class="experience-name">Pau Hana Sponsor</h3>
+          <div class="experience-price">$1,000</div>
+          <span class="experience-availability">2 Available</span>
+          <p class="experience-description">
+            Help close the day with connection by sponsoring our Pau Hana networking gathering. This sponsorship supports light refreshments and creates space for continued conversation among attendees, speakers, and partners.
+          </p>
+          <span class="experience-includes">Includes</span>
+          <ul class="experience-benefits">
+            <li>Recognition as Pau Hana Sponsor on event signage and website</li>
+            <li>Verbal acknowledgment at the start of the Pau Hana</li>
+            <li>Logo placement near Pau Hana area</li>
+            <li>4 complimentary summit tickets</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta">
+    <div class="container">
+      <h2 class="cta-title">Ready to Partner With Us?</h2>
+      <p class="cta-description">
+        Join us in building Hawaiʻi's AI-ready workforce. Contact us to discuss sponsorship opportunities and find the right fit for your organization.
+      </p>
+      <a href="mailto:hawaiiaisummit@kealanisolutions.com?subject=Sponsorship%20Interest" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+        </svg>
+        Contact Us About Sponsorship
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <a href="index.html">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit" class="footer-logo">
+    </a>
+    <a href="index.html" class="footer-link">Return to Hawaii Island AI Summit 2026</a>
+    <p class="footer-copyright">&copy; 2026 Hawaii Island AI Summit. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
