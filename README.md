@@ -25,5 +25,8 @@ npx serve
 ## Files
 
 - `index.html` - Main landing page
+- `flyer.html` - Print-ready community flyer (8.5x11")
+- `carousel-slide-1.html` - Social media carousel slide 1 (1080x1350px)
+- `carousel-slide-1b.html` - Social media carousel slide 1 with swipe indicator
 - `summit.ics` - Calendar invite file
 - `images/` - Logo and image assets
