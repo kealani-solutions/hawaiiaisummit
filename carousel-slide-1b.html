@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hawaii Island AI Summit - Carousel Slide 1b</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ========================================
+       Social Media Carousel - 1080x1350px (4:5)
+       Slide 1b: Event Introduction (with swipe bar)
+       ======================================== */
+    :root {
+      --color-teal: #006877;
+      --color-teal-dark: #00505F;
+      --color-teal-light: #4A9BA8;
+      --color-coral: #E07850;
+      --color-gold: #C4982F;
+      --color-cream: #FAF8F5;
+      --color-dark: #2C2825;
+      --font-display: 'Libre Baskerville', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-body);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .slide {
+      width: 1080px;
+      height: 1350px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--color-teal-dark);
+    }
+
+    /* ========================================
+       Hero Section with Background
+       ======================================== */
+    .hero {
+      height: 680px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 80, 95, 0.75) 0%,
+        rgba(0, 80, 95, 0.6) 50%,
+        rgba(0, 80, 95, 0.85) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      text-align: center;
+    }
+
+    .hero-logo {
+      height: 280px;
+      width: auto;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
+    }
+
+    .hero-tagline {
+      font-family: var(--font-body);
+      font-size: 36px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 900px;
+      line-height: 1.4;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ========================================
+       Event Details Section
+       ======================================== */
+    .details {
+      flex: 1;
+      background: var(--color-teal-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 80px;
+      gap: 45px;
+    }
+
+    .date-location {
+      text-align: center;
+    }
+
+    .event-date {
+      font-family: var(--font-display);
+      font-size: 78px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 18px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .event-location {
+      font-family: var(--font-body);
+      font-size: 42px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      letter-spacing: 0.05em;
+    }
+
+    .divider {
+      width: 200px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--color-teal-light), transparent);
+      border-radius: 2px;
+    }
+
+    .audience-badges {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      position: relative;
+      padding: 20px 45px;
+      font-family: var(--font-body);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      z-index: 1;
+    }
+
+    .badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #7DD3C0;
+      border-radius: 8px;
+      transform: rotate(-1.5deg);
+      z-index: -1;
+    }
+
+    .badge:nth-child(2)::before {
+      transform: rotate(1.5deg);
+    }
+
+    .welcome-text {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      max-width: 850px;
+      line-height: 1.5;
+    }
+
+    /* ========================================
+       Footer Strip
+       ======================================== */
+    .footer-strip {
+      background: var(--color-dark);
+      padding: 30px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .swipe-indicator {
+      font-family: var(--font-body);
+      font-size: 24px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.05em;
+    }
+
+    .swipe-arrow {
+      font-size: 28px;
+      color: var(--color-teal-light);
+    }
+
+    /* ========================================
+       Screen Preview
+       ======================================== */
+    @media screen {
+      html {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background: #3d3d3d;
+        padding: 40px;
+        overflow: auto;
+      }
+
+      body {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        flex-shrink: 0;
+        transform: scale(0.6);
+        transform-origin: top center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slide">
+    <!-- Hero with Hilo Bay Photo -->
+    <section class="hero">
+      <img src="images/backgrounds/hilo-bay.png" alt="Hilo Bay" class="hero-image">
+      <div class="hero-overlay">
+        <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit" class="hero-logo">
+        <p class="hero-tagline">
+          Leave with real workflows, tools, and next steps you can use immediately.
+        </p>
+      </div>
+    </section>
+
+    <!-- Event Details -->
+    <section class="details">
+      <div class="date-location">
+        <h1 class="event-date">March 12, 2026</h1>
+        <p class="event-location">Arc of Hilo, Hawaii Island</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="audience-badges">
+        <span class="badge">Community Builders</span>
+        <span class="badge">Small Business</span>
+      </div>
+
+      <p class="welcome-text">
+        No tech background required—just a curiosity to learn.
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer-strip">
+      <span class="swipe-indicator">SWIPE FOR MORE INFO</span>
+      <span class="swipe-arrow">→</span>
+    </div>
+  </div>
+</body>
+
+</html>
