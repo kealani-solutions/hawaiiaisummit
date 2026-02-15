@@ -1235,6 +1235,27 @@
       filter: saturate(1.1);
     }
 
+    .speaker-tba {
+      background: linear-gradient(135deg, rgba(0, 212, 232, 0.15) 0%, rgba(255, 127, 80, 0.15) 100%);
+      border: 3px dashed rgba(0, 212, 232, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .speaker-tba-icon {
+      width: 50px;
+      height: 50px;
+      color: var(--color-primary);
+      opacity: 0.7;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .speaker-card:hover .speaker-tba-icon {
+      opacity: 1;
+      transform: rotate(90deg);
+    }
+
     .speaker-photo-zoomed {
       object-position: center 20%;
       transform: scale(1.2);
@@ -1489,6 +1510,16 @@
           </div>
           <div class="speaker-name">Paul Dumais</div>
           <div class="speaker-title">Co-Founder & CTO, Abra Hospitality Inc</div>
+        </div>
+
+        <div class="speaker-card fade-in">
+          <div class="speaker-photo-wrap speaker-tba">
+            <svg class="speaker-tba-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </div>
+          <div class="speaker-name">More Coming Soon</div>
+          <div class="speaker-title">Stay tuned</div>
         </div>
       </div>
     </div>
