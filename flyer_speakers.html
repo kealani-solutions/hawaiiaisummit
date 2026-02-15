@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hawaii Island AI Summit 2026 - Speakers Flyer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ========================================
+       Print-Ready Flyer - 8.5 x 11 inches
+       Speakers Edition — Community / Warm Style
+       ======================================== */
+    @page {
+      size: 8.5in 11in;
+      margin: 0;
+    }
+
+    :root {
+      --color-teal: #006877;
+      --color-teal-light: #4A9BA8;
+      --color-coral: #E07850;
+      --color-gold: #C4982F;
+      --color-cream: #FAF8F5;
+      --color-paper: #F5F2ED;
+      --color-warm-gray: #5C5854;
+      --color-dark: #2C2825;
+      --font-display: 'Libre Baskerville', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 8.5in;
+      height: 11in;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-cream);
+      color: var(--color-dark);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .flyer {
+      width: 8.5in;
+      height: 11in;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: var(--color-cream);
+    }
+
+    /* ========================================
+       Hero with Photo
+       ======================================== */
+    .hero {
+      height: 2.7in;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 80, 95, 0.85) 0%,
+        rgba(0, 90, 105, 0.7) 50%,
+        rgba(0, 80, 95, 0.85) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25in;
+      text-align: center;
+    }
+
+    .hero-logo {
+      height: 1.5in;
+      width: auto;
+      margin-bottom: 0.08in;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    .hero-tagline {
+      font-family: var(--font-body);
+      font-size: 0.17in;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 7in;
+      line-height: 1.35;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.22in;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FFD97D;
+      margin-top: 0.12in;
+    }
+
+    /* ========================================
+       Event Details Strip
+       ======================================== */
+    .details-strip {
+      background: var(--color-teal);
+      padding: 0.12in 0.3in;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.2in;
+      flex-wrap: nowrap;
+    }
+
+    .detail {
+      font-family: var(--font-body);
+      font-size: 0.15in;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.06in;
+      white-space: nowrap;
+    }
+
+    .detail svg {
+      width: 0.18in;
+      height: 0.18in;
+      opacity: 0.8;
+    }
+
+    .detail-sep {
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 300;
+    }
+
+    .detail.pau-hana {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.05in 0.12in;
+      border-radius: 0.05in;
+      color: #FFD97D;
+      font-weight: 700;
+    }
+
+    /* ========================================
+       Main Content — Speakers Grid
+       ======================================== */
+    .content {
+      flex: 1;
+      padding: 0.3in 0.45in 0.15in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(var(--color-cream), var(--color-cream)),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+
+    .speakers-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.22in;
+    }
+
+    .speakers-header {
+      font-family: var(--font-display);
+      font-size: 0.34in;
+      font-weight: 700;
+      color: var(--color-teal);
+      text-align: center;
+    }
+
+    .speakers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.28in 0.2in;
+      width: 100%;
+    }
+
+    .speaker-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .speaker-photo {
+      width: 1.15in;
+      height: 1.15in;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--color-teal);
+      box-shadow:
+        0 4px 12px rgba(0, 104, 119, 0.15),
+        0 1px 3px rgba(0, 0, 0, 0.08);
+      margin-bottom: 0.1in;
+    }
+
+    .speaker-name {
+      font-family: var(--font-body);
+      font-size: 0.155in;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 0.03in;
+      line-height: 1.2;
+    }
+
+    .speaker-title {
+      font-family: var(--font-body);
+      font-size: 0.105in;
+      font-weight: 400;
+      color: var(--color-warm-gray);
+      line-height: 1.35;
+      max-width: 1.55in;
+    }
+
+    /* Welcome Message */
+    .welcome-message {
+      text-align: center;
+      padding: 0.06in 0.3in 0;
+    }
+
+    .welcome-text {
+      font-family: var(--font-display);
+      font-size: 0.19in;
+      font-style: italic;
+      color: var(--color-teal);
+      position: relative;
+      display: inline-block;
+    }
+
+    .welcome-text::before,
+    .welcome-text::after {
+      content: "\2726";
+      font-style: normal;
+      margin: 0 0.15in;
+      opacity: 0.5;
+    }
+
+    /* ========================================
+       Footer CTA
+       ======================================== */
+    .footer {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-top {
+      background: var(--color-teal-light);
+      padding: 0.2in 0.5in;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1in;
+    }
+
+    .partners-label {
+      font-family: var(--font-display);
+      font-size: 0.14in;
+      font-weight: 700;
+      color: var(--color-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    .partners-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12in;
+      align-items: center;
+      width: 100%;
+    }
+
+    .partners-row {
+      display: flex;
+      gap: 0.35in;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .partner-logo {
+      height: 0.35in;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+
+    .partner-logo.kealani {
+      height: 0.38in;
+    }
+
+    .partner-logo.hwit {
+      height: 0.4in;
+      filter: brightness(0) invert(1);
+    }
+
+    .partner-logo.nimblebrain {
+      height: 0.25in;
+      filter: none;
+    }
+
+    .partner-logo.infra {
+      height: 0.3in;
+    }
+
+    .partner-logo.blue-startups {
+      height: 0.32in;
+    }
+
+    .partner-logo.mayu {
+      height: 0.35in;
+    }
+
+    .partner-logo.netcom {
+      height: 0.25in;
+    }
+
+    .partner-logo.path {
+      height: 0.35in;
+    }
+
+    .partner-logo.bit {
+      height: 0.27in;
+    }
+
+    .footer-bottom {
+      background: var(--color-dark);
+      padding: 0.12in 0.4in;
+      display: flex;
+      align-items: center;
+      gap: 0.2in;
+    }
+
+    .qr-code {
+      width: 0.65in;
+      height: 0.65in;
+      border: 2px solid white;
+    }
+
+    .register-badge {
+      font-family: var(--font-display);
+      font-size: 0.2in;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-links {
+      font-size: 0.15in;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer-links a {
+      color: #A8DFE6;
+      text-decoration: none;
+    }
+
+    .footer-links .sep {
+      margin: 0 0.15in;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ========================================
+       Print Optimizations
+       ======================================== */
+    @media print {
+      html, body {
+        width: 8.5in;
+        height: 11in;
+      }
+
+      .flyer {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    /* ========================================
+       Screen Preview
+       ======================================== */
+    @media screen {
+      html {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background: #3d3d3d;
+        padding: 40px;
+        overflow: auto;
+      }
+
+      body {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        flex-shrink: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flyer">
+    <!-- Hero with Hilo Bay Photo -->
+    <section class="hero">
+      <img src="images/backgrounds/hilo-bay.png" alt="Hilo Bay" class="hero-image">
+      <div class="hero-overlay">
+        <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit" class="hero-logo">
+        <p class="hero-tagline">
+          Leave with real workflows, tools, and next steps you can use immediately.
+        </p>
+        <p class="hero-subtitle">Meet the Speakers</p>
+      </div>
+    </section>
+
+    <!-- Event Details -->
+    <div class="details-strip">
+      <span class="detail">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+        </svg>
+        Thurs. March 12, 2026
+      </span>
+      <span class="detail-sep">|</span>
+      <span class="detail">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+        </svg>
+        Arc of Hilo
+      </span>
+      <span class="detail-sep">|</span>
+      <span class="detail">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Summit 11am–4pm
+      </span>
+      <span class="detail-sep">|</span>
+      <span class="detail pau-hana">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+        </svg>
+        Pau Hana 4pm–6pm
+      </span>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Speakers -->
+      <div class="speakers-section">
+        <h2 class="speakers-header">Your Speakers</h2>
+        <div class="speakers-grid">
+          <div class="speaker-card">
+            <img src="images/speakers/benson_medina.jpeg" alt="Benson Medina" class="speaker-photo">
+            <div class="speaker-name">Benson Medina</div>
+            <div class="speaker-title">Director of R&D, Hawaii County</div>
+          </div>
+          <div class="speaker-card">
+            <img src="images/speakers/michelle_dumais.jpeg" alt="Michelle Dumais" class="speaker-photo">
+            <div class="speaker-name">Michelle Dumais</div>
+            <div class="speaker-title">Founder, Kealani Solutions</div>
+          </div>
+          <div class="speaker-card">
+            <img src="images/speakers/binil_chacko.jpeg" alt="Binil Chacko" class="speaker-photo">
+            <div class="speaker-name">Binil Chacko</div>
+            <div class="speaker-title">Business Advisor, Hawaii SBDC / Founder, Empower Potential</div>
+          </div>
+          <div class="speaker-card">
+            <img src="images/speakers/mathew_goldsborough.png" alt="Mathew Goldsborough" class="speaker-photo">
+            <div class="speaker-name">Mathew Goldsborough</div>
+            <div class="speaker-title">Founder & CEO, NimbleBrain</div>
+          </div>
+          <div class="speaker-card">
+            <img src="images/speakers/ratna_amin.jpeg" alt="Ratna Amin" class="speaker-photo">
+            <div class="speaker-name">Ratna Amin</div>
+            <div class="speaker-title">Owner, Infragarden</div>
+          </div>
+          <div class="speaker-card">
+            <img src="images/speakers/evan_mendenhall.jpeg" alt="Evan Mendenhall" class="speaker-photo">
+            <div class="speaker-name">Evan Mendenhall</div>
+            <div class="speaker-title">Founder, Professional AI Agents LLC</div>
+          </div>
+          <div class="speaker-card">
+            <img src="images/speakers/tracie_foglia.jpeg" alt="Tracie Foglia" class="speaker-photo">
+            <div class="speaker-name">Tracie Foglia</div>
+            <div class="speaker-title">Hawaii Employers Council</div>
+          </div>
+          <div class="speaker-card">
+            <img src="images/speakers/paul_dumais.jpeg" alt="Paul Dumais" class="speaker-photo">
+            <div class="speaker-name">Paul Dumais</div>
+            <div class="speaker-title">Co-Founder & CTO, Abra Hospitality Inc</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Welcome Message -->
+      <div class="welcome-message">
+        <p class="welcome-text">No tech background required—just a curiosity to learn.</p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-top">
+        <p class="partners-label">In partnership with</p>
+        <div class="partners-list">
+          <div class="partners-row">
+            <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions" class="partner-logo kealani">
+            <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women In Tech" class="partner-logo hwit">
+            <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain" class="partner-logo nimblebrain">
+            <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden" class="partner-logo infra">
+          </div>
+          <div class="partners-row">
+            <img src="images/logos/blue_startups_logo.png" alt="Blue Startups" class="partner-logo blue-startups">
+            <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems" class="partner-logo mayu">
+            <img src="images/logos/netcom_logo.png" alt="Netcom" class="partner-logo netcom">
+            <img src="images/logos/path_logo.png" alt="Path" class="partner-logo path">
+            <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech" class="partner-logo bit">
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <img src="images/qr-code-register.png" alt="Scan to Register" class="qr-code">
+        <span class="register-badge">Register Now</span>
+        <span class="footer-links">
+          <a href="https://hawaiiaisummit.com">www.hawaiiaisummit.com</a>
+          <span class="sep">|</span>
+          hawaiiaisummit@kealanisolutions.com
+        </span>
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>
