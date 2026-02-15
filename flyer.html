@@ -308,104 +308,102 @@
 
     .footer-top {
       background: var(--color-teal-light);
-      padding: 0.35in 0.4in;
-      display: grid;
-      grid-template-columns: 1.35in 1fr;
-      gap: 0.3in;
-      align-items: center;
-    }
-
-    .qr-code {
-      width: 1.25in;
-      height: 1.25in;
-    }
-
-    .partners {
+      padding: 0.25in 0.5in;
       display: flex;
       flex-direction: column;
-      gap: 0.08in;
+      align-items: center;
+      gap: 0.12in;
     }
 
     .partners-label {
       font-family: var(--font-display);
-      font-size: 0.22in;
+      font-size: 0.16in;
       font-weight: 700;
       color: var(--color-dark);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
+      text-align: center;
     }
 
     .partners-list {
       display: flex;
       flex-direction: column;
-      gap: 0.18in;
+      gap: 0.15in;
       align-items: center;
+      width: 100%;
     }
 
     .partners-row {
       display: flex;
-      gap: 0.2in;
+      gap: 0.35in;
       align-items: center;
       justify-content: center;
+      width: 100%;
     }
 
     .partner-logo {
-      height: 0.45in;
+      height: 0.38in;
       width: auto;
       object-fit: contain;
       filter: brightness(0) invert(1);
-      opacity: 0.95;
+      opacity: 0.8;
     }
 
     .partner-logo.kealani {
-      height: 0.5in;
+      height: 0.42in;
     }
 
     .partner-logo.hwit {
-      height: 0.5in;
+      height: 0.45in;
       filter: brightness(0) invert(1);
     }
 
     .partner-logo.nimblebrain {
-      height: 0.3in;
+      height: 0.28in;
       filter: none;
     }
 
     .partner-logo.infra {
-      height: 0.35in;
-    }
-
-    .partner-logo.blue-startups {
-      height: 0.4in;
-    }
-
-    .partner-logo.mayu {
-      height: 0.45in;
-    }
-
-    .partner-logo.netcom {
       height: 0.32in;
     }
 
-    .partner-logo.path {
-      height: 0.456in;
+    .partner-logo.blue-startups {
+      height: 0.35in;
     }
 
-    .partner-sep {
-      display: none;
+    .partner-logo.mayu {
+      height: 0.38in;
+    }
+
+    .partner-logo.netcom {
+      height: 0.28in;
+    }
+
+    .partner-logo.path {
+      height: 0.38in;
+    }
+
+    .partner-logo.bit {
+      height: 0.3in;
     }
 
     .footer-bottom {
       background: var(--color-dark);
-      padding: 0.16in 0.4in;
+      padding: 0.12in 0.4in;
       display: flex;
       align-items: center;
-      gap: 0.3in;
+      gap: 0.2in;
+    }
+
+    .qr-code {
+      width: 0.65in;
+      height: 0.65in;
+      border: 2px solid white;
     }
 
     .register-badge {
       font-family: var(--font-display);
-      font-size: 0.22in;
+      font-size: 0.2in;
       font-weight: 700;
       color: white;
       text-transform: uppercase;
@@ -583,26 +581,25 @@
     <!-- Footer -->
     <footer class="footer">
       <div class="footer-top">
-        <img src="images/qr-code-register.png" alt="Scan to Register" class="qr-code">
-        <div class="partners">
-          <p class="partners-label">In partnership with:</p>
-          <div class="partners-list">
-            <div class="partners-row">
-              <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions" class="partner-logo kealani">
-              <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain" class="partner-logo nimblebrain">
-              <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden" class="partner-logo infra">
-            </div>
-            <div class="partners-row">
-              <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women In Tech" class="partner-logo hwit" style="margin-right: 16px;">
-              <img src="images/logos/blue_startups_logo.png" alt="Blue Startups" class="partner-logo blue-startups">
-              <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems" class="partner-logo mayu">
-              <img src="images/logos/netcom_logo.png" alt="Netcom" class="partner-logo netcom">
-              <img src="images/logos/path_logo.png" alt="Path" class="partner-logo path">
-            </div>
+        <p class="partners-label">In partnership with</p>
+        <div class="partners-list">
+          <div class="partners-row">
+            <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions" class="partner-logo kealani">
+            <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women In Tech" class="partner-logo hwit">
+            <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain" class="partner-logo nimblebrain">
+            <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden" class="partner-logo infra">
+          </div>
+          <div class="partners-row">
+            <img src="images/logos/blue_startups_logo.png" alt="Blue Startups" class="partner-logo blue-startups">
+            <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems" class="partner-logo mayu">
+            <img src="images/logos/netcom_logo.png" alt="Netcom" class="partner-logo netcom">
+            <img src="images/logos/path_logo.png" alt="Path" class="partner-logo path">
+            <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech" class="partner-logo bit">
           </div>
         </div>
       </div>
       <div class="footer-bottom">
+        <img src="images/qr-code-register.png" alt="Scan to Register" class="qr-code">
         <span class="register-badge">Register Now</span>
         <span class="footer-links">
           <a href="https://hawaiiaisummit.com">www.hawaiiaisummit.com</a>
