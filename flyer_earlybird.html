@@ -175,7 +175,7 @@
        ======================================== */
     .content {
       flex: 1;
-      padding: 0.45in 0.45in 0.25in;
+      padding: 0.25in 0.45in;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -297,6 +297,26 @@
       opacity: 0.5;
     }
 
+    /* Early Bird */
+    .early-bird {
+      background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D1 100%);
+      border: 2px dashed var(--color-gold);
+      border-radius: 0.08in;
+      padding: 0.1in 0.3in;
+      text-align: center;
+    }
+
+    .early-bird-text {
+      font-family: var(--font-display);
+      font-size: 0.19in;
+      font-weight: 700;
+      color: var(--color-dark);
+      white-space: nowrap;
+    }
+
+    .early-bird-text .save {
+      color: var(--color-coral);
+    }
 
     /* ========================================
        Footer CTA
@@ -337,14 +357,8 @@
 
     .partners-list {
       display: flex;
-      flex-direction: column;
-      gap: 0.1in;
-      align-items: center;
-    }
-
-    .partners-row {
-      display: flex;
-      gap: 0.25in;
+      flex-wrap: wrap;
+      gap: 0.1in 0.25in;
       align-items: center;
       justify-content: center;
     }
@@ -362,7 +376,7 @@
     }
 
     .partner-logo.hwit {
-      height: 0.625in;
+      height: 0.5in;
       filter: brightness(0) invert(1);
     }
 
@@ -570,6 +584,12 @@
         <p class="welcome-text">No tech background required—just a curiosity to learn.</p>
       </div>
 
+      <!-- Early Bird -->
+      <div class="early-bird">
+        <p class="early-bird-text">
+          Early Bird Special — Register by Feb 13 to <span class="save">save 30%</span>
+        </p>
+      </div>
     </main>
 
     <!-- Footer -->
@@ -579,15 +599,12 @@
         <div class="partners">
           <p class="partners-label">In partnership with:</p>
           <div class="partners-list">
-            <div class="partners-row">
-              <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions" class="partner-logo kealani">
-              <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain" class="partner-logo nimblebrain">
-              <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden" class="partner-logo infra">
-            </div>
-            <div class="partners-row">
-              <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women In Tech" class="partner-logo hwit">
-              <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech" class="partner-logo bit">
-            </div>
+            <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions" class="partner-logo kealani">
+            <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women In Tech" class="partner-logo hwit">
+            <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain" class="partner-logo nimblebrain">
+            <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI" class="partner-logo hcai">
+            <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden" class="partner-logo infra">
+            <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech" class="partner-logo bit">
           </div>
         </div>
       </div>
