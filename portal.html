@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendee Portal | Hawaii Island AI Summit 2026</title>
+  <link rel="icon" type="image/png" href="images/logos/AI_transparent_small.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Bebas+Neue&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #00D4E8;
+      --color-primary-dark: #006877;
+      --color-secondary: #FF7F50;
+      --color-secondary-light: #FF9A70;
+      --color-accent: #FFD93D;
+      --color-white: #FFFFFF;
+      --color-dark: #0A0A0A;
+      --color-gray: #0D1B1E;
+      --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      color: var(--color-white);
+      line-height: 1.6;
+      background: var(--color-dark);
+      font-weight: 600;
+      min-height: 100vh;
+    }
+
+    .portal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background: rgba(0, 0, 0, 0.5);
+      border-bottom: 3px solid var(--color-primary);
+    }
+
+    .portal-header h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .portal-header a { text-decoration: none; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .user-email {
+      color: var(--color-primary);
+      font-size: 0.9rem;
+    }
+
+    .btn-logout {
+      padding: 8px 20px;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 2px solid var(--color-secondary);
+      background: transparent;
+      color: var(--color-secondary);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-logout:hover {
+      background: var(--color-secondary);
+      color: white;
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      color: var(--color-primary);
+    }
+
+    .portal-content {
+      display: none;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 50px 20px;
+    }
+
+    .portal-welcome {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .portal-welcome h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(0, 212, 232, 0.4);
+    }
+
+    .portal-welcome p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .portal-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(0, 212, 232, 0.3);
+      padding: 35px 30px;
+      transition: all 0.3s;
+    }
+
+    .portal-card:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 30px rgba(0, 212, 232, 0.2);
+    }
+
+    .portal-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-secondary);
+      margin-bottom: 12px;
+    }
+
+    .portal-card p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+    }
+
+    .coming-soon {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .set-password-section {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 35px 30px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 127, 80, 0.3);
+    }
+
+    .set-password-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .set-password-section .desc {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .set-password-section input {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 127, 80, 0.4);
+      color: var(--color-white);
+      outline: none;
+      margin-bottom: 12px;
+      transition: border-color 0.3s;
+    }
+
+    .set-password-section input:focus { border-color: var(--color-secondary); }
+    .set-password-section input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+    .btn-set-pw {
+      width: 100%;
+      padding: 12px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 2px solid var(--color-secondary);
+      background: transparent;
+      color: var(--color-secondary);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-set-pw:hover {
+      background: var(--color-secondary);
+      color: white;
+    }
+
+    .pw-message {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .pw-message.success { display: block; color: var(--color-primary); }
+    .pw-message.error { display: block; color: var(--color-secondary); }
+
+    .has-password-note {
+      color: var(--color-primary);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .portal-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading">Loading...</div>
+
+  <header class="portal-header" id="portal-header" style="display: none;">
+    <a href="/"><h1>Hawaii AI Summit</h1></a>
+    <div class="header-right">
+      <span class="user-email" id="user-email"></span>
+      <button class="btn-logout" id="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <div class="portal-content" id="portal-content">
+    <div class="portal-welcome">
+      <h2>Welcome, Attendee</h2>
+      <p>Your hub for summit materials, schedule details, and connections.</p>
+    </div>
+
+    <div class="portal-grid">
+      <div class="portal-card">
+        <h3>Event Schedule</h3>
+        <p>Detailed session schedule with room assignments and speaker bios.</p>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+      <div class="portal-card">
+        <h3>Workshop Materials</h3>
+        <p>Pre-event prep guides and post-event resources for your track.</p>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+      <div class="portal-card">
+        <h3>Attendee Directory</h3>
+        <p>Connect with fellow attendees before the event.</p>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+    </div>
+
+    <div class="set-password-section" id="set-password-section">
+      <h3>Set a Password</h3>
+      <p class="desc">Optional: set a password so you can log in without a magic link next time.</p>
+      <form id="set-password-form">
+        <input type="password" id="new-password" placeholder="Choose a password (min 6 characters)" minlength="6" required>
+        <input type="password" id="confirm-password" placeholder="Confirm password" minlength="6" required>
+        <button type="submit" class="btn-set-pw">Set Password</button>
+      </form>
+      <div id="pw-message" class="pw-message"></div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-auth-compat.js"></script>
+  <script>
+    // TODO: Replace with your Firebase project config (same as login.html)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    const loadingDiv = document.getElementById('loading');
+    const portalHeader = document.getElementById('portal-header');
+    const portalContent = document.getElementById('portal-content');
+    const setPasswordSection = document.getElementById('set-password-section');
+
+    function showPortal(user) {
+      loadingDiv.style.display = 'none';
+      portalHeader.style.display = 'flex';
+      portalContent.style.display = 'block';
+      document.getElementById('user-email').textContent = user.email;
+
+      const hasPassword = user.providerData.some(p => p.providerId === 'password');
+      if (hasPassword) {
+        setPasswordSection.innerHTML = '<p class="has-password-note">You have a password set. You can log in with your email and password next time.</p>';
+      }
+    }
+
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+      let email = window.localStorage.getItem('emailForSignIn');
+      if (!email) {
+        email = window.prompt('Please confirm your email address');
+      }
+      if (email) {
+        auth.signInWithEmailLink(email, window.location.href)
+          .then((result) => {
+            window.localStorage.removeItem('emailForSignIn');
+            window.history.replaceState({}, document.title, '/portal');
+            showPortal(result.user);
+          })
+          .catch((error) => {
+            loadingDiv.textContent = 'Sign-in link expired or invalid. Please request a new one.';
+            setTimeout(() => { window.location.href = '/login'; }, 3000);
+          });
+      } else {
+        window.location.href = '/login';
+      }
+    } else {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          showPortal(user);
+        } else {
+          window.location.href = '/login';
+        }
+      });
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      auth.signOut().then(() => {
+        window.location.href = '/';
+      });
+    });
+
+    document.getElementById('set-password-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pw = document.getElementById('new-password').value;
+      const confirm = document.getElementById('confirm-password').value;
+      const msgDiv = document.getElementById('pw-message');
+
+      if (pw !== confirm) {
+        msgDiv.textContent = 'Passwords do not match.';
+        msgDiv.className = 'pw-message error';
+        return;
+      }
+
+      try {
+        const user = auth.currentUser;
+        const credential = firebase.auth.EmailAuthProvider.credential(user.email, pw);
+        await user.linkWithCredential(credential);
+        msgDiv.textContent = 'Password set! You can use it to log in next time.';
+        msgDiv.className = 'pw-message success';
+        document.getElementById('set-password-form').style.display = 'none';
+      } catch (err) {
+        if (err.code === 'auth/provider-already-linked') {
+          msgDiv.textContent = 'You already have a password set.';
+          msgDiv.className = 'pw-message error';
+        } else {
+          msgDiv.textContent = 'Failed to set password. Please try again.';
+          msgDiv.className = 'pw-message error';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
