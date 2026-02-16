@@ -203,6 +203,8 @@
       </div>
       <button type="submit" class="btn-login" id="password-btn">Log In</button>
       <p style="margin-top: 12px; text-align: center;">
+        <a href="#" id="forgot-password" style="color: var(--color-secondary); font-size: 0.9rem;">Forgot password?</a>
+        &nbsp;&middot;&nbsp;
         <a href="#" id="use-magic-link" style="color: var(--color-primary); font-size: 0.9rem;">Use magic link instead</a>
       </p>
     </form>
@@ -323,6 +325,23 @@
       const typedEmail = emailInput.value.trim();
       if (typedEmail) {
         document.getElementById('password-email').value = typedEmail;
+      }
+    });
+
+    // Forgot password
+    document.getElementById('forgot-password').addEventListener('click', async (e) => {
+      e.preventDefault();
+      hideMessage();
+      const email = document.getElementById('password-email').value.trim();
+      if (!email) {
+        showMessage('Please enter your email address first.', 'error');
+        return;
+      }
+      try {
+        await auth.sendPasswordResetEmail(email);
+        showMessage('Password reset email sent to ' + email + '. Check your inbox.', 'success');
+      } catch (err) {
+        showMessage('Could not send reset email. Try using a magic link instead.', 'error');
       }
     });
 
