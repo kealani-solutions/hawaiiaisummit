@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendee Login | Hawaii Island AI Summit 2026</title>
+  <link rel="icon" type="image/png" href="images/logos/AI_transparent_small.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Bebas+Neue&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #00D4E8;
+      --color-primary-dark: #006877;
+      --color-secondary: #FF7F50;
+      --color-secondary-light: #FF9A70;
+      --color-accent: #FFD93D;
+      --color-white: #FFFFFF;
+      --color-dark: #0A0A0A;
+      --color-gray: #0D1B1E;
+      --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      color: var(--color-white);
+      line-height: 1.6;
+      background: var(--color-dark);
+      font-weight: 600;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #0A0A0A 0%, #0D1B1E 30%, #006877 70%, #FF7F50 100%);
+      background-size: 400% 400%;
+      animation: boldGradient 10s ease infinite;
+    }
+
+    @keyframes boldGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .login-card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 3px solid var(--color-primary);
+      padding: 50px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .login-card h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 30px rgba(0, 212, 232, 0.5);
+    }
+
+    .login-card .subtitle {
+      color: var(--color-primary);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 35px;
+    }
+
+    .form-group { margin-bottom: 20px; text-align: left; }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(0, 212, 232, 0.4);
+      color: var(--color-white);
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 15px rgba(0, 212, 232, 0.3);
+    }
+
+    .form-group input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border: none;
+      cursor: pointer;
+      background: var(--color-secondary);
+      color: white;
+      box-shadow: 0 0 25px rgba(255, 127, 80, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(255, 127, 80, 0.7);
+      background: var(--color-secondary-light);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 14px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: rgba(0, 212, 232, 0.15);
+      border: 2px solid var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .message.error {
+      display: block;
+      background: rgba(255, 127, 80, 0.15);
+      border: 2px solid var(--color-secondary);
+      color: var(--color-secondary);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover { color: var(--color-primary); }
+
+    @media (max-width: 500px) {
+      .login-card { padding: 35px 25px; }
+      .login-card h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h1>Attendee Portal</h1>
+    <p class="subtitle">Registered Guests Only</p>
+
+    <!-- Email login form -->
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Your Registration Email</label>
+        <input type="email" id="email" placeholder="email@example.com" required autocomplete="email">
+      </div>
+      <button type="submit" class="btn-login" id="submit-btn">Send Login Link</button>
+    </form>
+
+    <!-- Password login form (shown if user has set a password) -->
+    <form id="password-form" style="display: none;">
+      <div class="form-group">
+        <label for="password-email">Email</label>
+        <input type="email" id="password-email" readonly>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit" class="btn-login" id="password-btn">Log In</button>
+      <p style="margin-top: 12px; text-align: center;">
+        <a href="#" id="use-magic-link" style="color: var(--color-primary); font-size: 0.9rem;">Use magic link instead</a>
+      </p>
+    </form>
+
+    <div id="message" class="message"></div>
+    <a href="/" class="back-link">&larr; Back to Hawaii Island AI Summit</a>
+  </div>
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-auth-compat.js"></script>
+  <script>
+    // TODO: Replace with your Firebase project config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const loginForm = document.getElementById('login-form');
+    const passwordForm = document.getElementById('password-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const messageDiv = document.getElementById('message');
+    const emailInput = document.getElementById('email');
+
+    function showMessage(text, type) {
+      messageDiv.textContent = text;
+      messageDiv.className = 'message ' + type;
+    }
+
+    function hideMessage() {
+      messageDiv.className = 'message';
+    }
+
+    // Check if user is already logged in
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        window.location.href = '/portal';
+      }
+    });
+
+    // Magic link login flow
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideMessage();
+      const email = emailInput.value.trim();
+      if (!email) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Checking registration...';
+
+      try {
+        // Step 1: Check Luma registration
+        const checkRes = await fetch('/.netlify/functions/check-registration', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const checkData = await checkRes.json();
+
+        if (!checkData.registered) {
+          showMessage('This email is not registered for the summit. Please register at lu.ma first.', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Login Link';
+          return;
+        }
+
+        // Step 2: Check if user has a password set (try sign-in methods)
+        const methods = await auth.fetchSignInMethodsForEmail(email);
+        if (methods.includes('password')) {
+          // User has a password - show password form
+          loginForm.style.display = 'none';
+          passwordForm.style.display = 'block';
+          document.getElementById('password-email').value = email;
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Login Link';
+          return;
+        }
+
+        // Step 3: Send magic link via Firebase
+        submitBtn.textContent = 'Sending link...';
+        const actionCodeSettings = {
+          url: window.location.origin + '/portal',
+          handleCodeInApp: true,
+        };
+        await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+        window.localStorage.setItem('emailForSignIn', email);
+        showMessage('Check your email! We sent a login link to ' + email, 'success');
+        loginForm.style.display = 'none';
+      } catch (err) {
+        showMessage('Something went wrong. Please try again.', 'error');
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Login Link';
+    });
+
+    // Password login flow
+    passwordForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideMessage();
+      const email = document.getElementById('password-email').value;
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('password-btn');
+      btn.disabled = true;
+      btn.textContent = 'Logging in...';
+
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        window.location.href = '/portal';
+      } catch (err) {
+        showMessage('Invalid password. Please try again or use a magic link.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Log In';
+      }
+    });
+
+    // Switch back to magic link
+    document.getElementById('use-magic-link').addEventListener('click', async (e) => {
+      e.preventDefault();
+      hideMessage();
+      const email = document.getElementById('password-email').value;
+      passwordForm.style.display = 'none';
+
+      try {
+        const actionCodeSettings = {
+          url: window.location.origin + '/portal',
+          handleCodeInApp: true,
+        };
+        await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+        window.localStorage.setItem('emailForSignIn', email);
+        showMessage('Check your email! We sent a login link to ' + email, 'success');
+      } catch (err) {
+        showMessage('Something went wrong. Please try again.', 'error');
+        loginForm.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
