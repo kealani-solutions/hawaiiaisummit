@@ -4,6 +4,10 @@
 # No build command needed for static site
 # command = ""
 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # Redirect www to non-www
 [[redirects]]
   from = "https://www.hawaiiaisummit.com/*"
