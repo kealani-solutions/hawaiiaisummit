@@ -212,20 +212,30 @@
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-auth-compat.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAj3ln6bepdKO9lG6VkmbzvgiXMwxcg8HI",
-      authDomain: "kealani-cloud-agents.firebaseapp.com",
-      projectId: "kealani-cloud-agents",
-      appId: "1:1047374186647:web:2f3fbbc2b08e414fa601d2",
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    let auth;
 
     const loginForm = document.getElementById('login-form');
     const passwordForm = document.getElementById('password-form');
     const submitBtn = document.getElementById('submit-btn');
     const messageDiv = document.getElementById('message');
     const emailInput = document.getElementById('email');
+
+    // Load Firebase config from serverless function
+    async function initFirebase() {
+      const res = await fetch('/.netlify/functions/firebase-config');
+      const firebaseConfig = await res.json();
+      firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+
+      // Check if user is already logged in
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          window.location.href = '/portal';
+        }
+      });
+    }
+
+    initFirebase();
 
     function showMessage(text, type) {
       messageDiv.textContent = text;
@@ -235,13 +245,6 @@
     function hideMessage() {
       messageDiv.className = 'message';
     }
-
-    // Check if user is already logged in
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        window.location.href = '/portal';
-      }
-    });
 
     // Magic link login flow
     loginForm.addEventListener('submit', async (e) => {
