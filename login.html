@@ -186,13 +186,16 @@
         <input type="email" id="email" placeholder="email@example.com" required autocomplete="email">
       </div>
       <button type="submit" class="btn-login" id="submit-btn">Send Login Link</button>
+      <p style="margin-top: 12px; text-align: center;">
+        <a href="#" id="show-password-form" style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Have a password? Log in here</a>
+      </p>
     </form>
 
-    <!-- Password login form (shown if user has set a password) -->
+    <!-- Password login form -->
     <form id="password-form" style="display: none;">
       <div class="form-group">
         <label for="password-email">Email</label>
-        <input type="email" id="password-email" readonly>
+        <input type="email" id="password-email" required autocomplete="email">
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -272,19 +275,7 @@
           return;
         }
 
-        // Step 2: Check if user has a password set (try sign-in methods)
-        const methods = await auth.fetchSignInMethodsForEmail(email);
-        if (methods.includes('password')) {
-          // User has a password - show password form
-          loginForm.style.display = 'none';
-          passwordForm.style.display = 'block';
-          document.getElementById('password-email').value = email;
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Login Link';
-          return;
-        }
-
-        // Step 3: Send magic link via Firebase
+        // Step 2: Send magic link via Firebase
         submitBtn.textContent = 'Sending link...';
         const actionCodeSettings = {
           url: window.location.origin + '/portal',
@@ -322,24 +313,29 @@
       }
     });
 
-    // Switch back to magic link
-    document.getElementById('use-magic-link').addEventListener('click', async (e) => {
+    // Toggle: show password form
+    document.getElementById('show-password-form').addEventListener('click', (e) => {
       e.preventDefault();
       hideMessage();
-      const email = document.getElementById('password-email').value;
-      passwordForm.style.display = 'none';
+      loginForm.style.display = 'none';
+      passwordForm.style.display = 'block';
+      // Pre-fill email if they already typed one
+      const typedEmail = emailInput.value.trim();
+      if (typedEmail) {
+        document.getElementById('password-email').value = typedEmail;
+      }
+    });
 
-      try {
-        const actionCodeSettings = {
-          url: window.location.origin + '/portal',
-          handleCodeInApp: true,
-        };
-        await auth.sendSignInLinkToEmail(email, actionCodeSettings);
-        window.localStorage.setItem('emailForSignIn', email);
-        showMessage('Check your email! We sent a login link to ' + email, 'success');
-      } catch (err) {
-        showMessage('Something went wrong. Please try again.', 'error');
-        loginForm.style.display = 'block';
+    // Toggle: back to magic link form
+    document.getElementById('use-magic-link').addEventListener('click', (e) => {
+      e.preventDefault();
+      hideMessage();
+      passwordForm.style.display = 'none';
+      loginForm.style.display = 'block';
+      // Pre-fill email if they typed one in the password form
+      const typedEmail = document.getElementById('password-email').value.trim();
+      if (typedEmail) {
+        emailInput.value = typedEmail;
       }
     });
   </script>
