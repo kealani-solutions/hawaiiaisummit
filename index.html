@@ -1161,10 +1161,70 @@
       text-align: center;
       position: relative;
       transition: transform 0.4s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .speaker-card:hover {
       transform: translateY(-8px);
+    }
+
+    /* "View session" hint on hover */
+    .speaker-card::after {
+      content: 'View Session →';
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      white-space: nowrap;
+      margin-top: 8px;
+    }
+
+    .speaker-card:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Track badge on speaker cards */
+    .speaker-track-badge {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+    }
+
+    .speaker-track-badge.leaders {
+      color: var(--color-secondary);
+      border: 1px solid rgba(255, 127, 80, 0.5);
+      background: rgba(255, 127, 80, 0.1);
+    }
+
+    .speaker-track-badge.builders {
+      color: var(--color-primary);
+      border: 1px solid rgba(0, 212, 232, 0.5);
+      background: rgba(0, 212, 232, 0.1);
+    }
+
+    .speaker-track-badge.keynote {
+      color: var(--color-accent);
+      border: 1px solid rgba(255, 217, 61, 0.5);
+      background: rgba(255, 217, 61, 0.1);
+    }
+
+    .speaker-track-badge.panel {
+      color: var(--color-white);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .speaker-photo-wrap {
@@ -1236,12 +1296,16 @@
 
     .speaker-name {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: white;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 6px;
+      min-height: 2.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .speaker-title {
@@ -1249,6 +1313,14 @@
       font-weight: 600;
       color: var(--color-primary);
       line-height: 1.4;
+      min-height: 2.8em;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .speaker-track-badge {
+      margin-top: auto;
     }
 
     @media (max-width: 1000px) {
@@ -1272,6 +1344,349 @@
 
       .speaker-name {
         font-size: 1.1rem;
+      }
+    }
+
+    /* ========================================
+       Speaker Modal / Drawer
+       ======================================== */
+    .speaker-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      cursor: pointer;
+    }
+
+    .speaker-modal-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .speaker-modal {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1001;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--color-gray);
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .speaker-modal.active {
+      transform: translateY(0);
+    }
+
+    .speaker-modal-accent {
+      height: 6px;
+      width: 100%;
+    }
+
+    .speaker-modal-accent.leaders {
+      background: linear-gradient(90deg, var(--color-secondary), var(--color-secondary-light), var(--color-accent));
+    }
+
+    .speaker-modal-accent.builders {
+      background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark), var(--color-primary));
+    }
+
+    .speaker-modal-accent.keynote {
+      background: linear-gradient(90deg, var(--color-accent), var(--color-secondary), var(--color-primary));
+    }
+
+    .speaker-modal-accent.panel {
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-secondary));
+    }
+
+    .speaker-modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      color: var(--color-white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .speaker-modal-close:hover {
+      background: var(--color-secondary);
+      border-color: var(--color-secondary);
+    }
+
+    .speaker-modal-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 60px 40px 80px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 60px;
+      position: relative;
+    }
+
+    .modal-speaker-aside {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .modal-photo-wrap {
+      width: 200px;
+      height: 200px;
+      position: relative;
+    }
+
+    .modal-photo-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+
+    .modal-photo-ring.leaders {
+      border: 3px solid var(--color-secondary);
+      box-shadow: 0 0 30px rgba(255, 127, 80, 0.3);
+    }
+
+    .modal-photo-ring.builders {
+      border: 3px solid var(--color-primary);
+      box-shadow: 0 0 30px rgba(0, 212, 232, 0.3);
+    }
+
+    .modal-photo-ring.keynote {
+      border: 3px solid var(--color-accent);
+      box-shadow: 0 0 30px rgba(255, 217, 61, 0.3);
+    }
+
+    .modal-photo-ring.panel {
+      border: 3px solid var(--color-white);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .modal-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+    }
+
+    .modal-speaker-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--color-white);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .modal-speaker-role {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .modal-speaker-company {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .modal-links {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .modal-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      color: rgba(255, 255, 255, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .modal-link:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: rgba(0, 212, 232, 0.1);
+      box-shadow: 0 0 15px rgba(0, 212, 232, 0.3);
+    }
+
+    .modal-session {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .modal-track-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .modal-track-label.leaders { color: var(--color-secondary); }
+    .modal-track-label.builders { color: var(--color-primary); }
+    .modal-track-label.keynote { color: var(--color-accent); }
+    .modal-track-label.panel { color: var(--color-white); }
+
+    .modal-track-dot {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+    }
+
+    .modal-track-dot.leaders {
+      background: var(--color-secondary);
+      box-shadow: 0 0 12px rgba(255, 127, 80, 0.8);
+    }
+
+    .modal-track-dot.builders {
+      background: var(--color-primary);
+      box-shadow: 0 0 12px rgba(0, 212, 232, 0.8);
+    }
+
+    .modal-track-dot.keynote {
+      background: var(--color-accent);
+      box-shadow: 0 0 12px rgba(255, 217, 61, 0.8);
+    }
+
+    .modal-track-dot.panel {
+      background: var(--color-white);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    }
+
+    .modal-session-time {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.5);
+      margin-left: 20px;
+    }
+
+    .modal-session-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--color-white);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.05;
+    }
+
+    .modal-session-abstract {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.8;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .modal-session-abstract::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+    }
+
+    .modal-session-abstract.leaders::before {
+      background: var(--color-secondary);
+      box-shadow: 0 0 10px rgba(255, 127, 80, 0.5);
+    }
+
+    .modal-session-abstract.builders::before {
+      background: var(--color-primary);
+      box-shadow: 0 0 10px rgba(0, 212, 232, 0.5);
+    }
+
+    .modal-session-abstract.keynote::before {
+      background: var(--color-accent);
+      box-shadow: 0 0 10px rgba(255, 217, 61, 0.5);
+    }
+
+    .modal-session-abstract.panel::before {
+      background: var(--color-white);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-bio-heading {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .modal-bio {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.8;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .speaker-modal-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px 20px 60px;
+      }
+
+      .modal-photo-wrap {
+        width: 140px;
+        height: 140px;
+      }
+
+      .modal-photo {
+        width: 140px;
+        height: 140px;
+      }
+
+      .modal-speaker-name {
+        font-size: 1.5rem;
+      }
+
+      .speaker-card::after {
+        display: none;
       }
     }
 
@@ -1517,85 +1932,110 @@
       </div>
 
       <div class="speakers-grid">
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('benson')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/benson_medina.jpeg" alt="Benson Medina" class="speaker-photo">
           </div>
           <div class="speaker-name">Benson Medina</div>
-          <div class="speaker-title">Director of R&D, Hawaii County</div>
+          <div class="speaker-title">Hawaii County</div>
+          <span class="speaker-track-badge keynote">Keynote</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('michelle')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/michelle_dumais.jpeg" alt="Michelle Dumais" class="speaker-photo speaker-photo-zoomed">
           </div>
           <div class="speaker-name">Michelle Dumais</div>
-          <div class="speaker-title">Founder, Kealani Solutions</div>
+          <div class="speaker-title">Kealani Solutions</div>
+          <span class="speaker-track-badge leaders">Leaders Track</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('binil')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/binil_chacko.jpeg" alt="Binil Chacko" class="speaker-photo">
           </div>
           <div class="speaker-name">Binil Chacko</div>
-          <div class="speaker-title">Founder, Empower Potential / Business Advisor, Hawaii SBDC</div>
+          <div class="speaker-title">Hawai&#699;i SBDC</div>
+          <span class="speaker-track-badge keynote">Keynote</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('mathew')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/mathew_goldsborough.png" alt="Mathew Goldsborough" class="speaker-photo">
           </div>
           <div class="speaker-name">Mathew Goldsborough</div>
-          <div class="speaker-title">Founder & CEO, NimbleBrain</div>
+          <div class="speaker-title">NimbleBrain</div>
+          <span class="speaker-track-badge builders">Builders Track</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('ratna')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/ratna_amin.jpeg" alt="Ratna Amin" class="speaker-photo">
           </div>
           <div class="speaker-name">Ratna Amin</div>
-          <div class="speaker-title">Owner, Infragarden</div>
+          <div class="speaker-title">Infragarden</div>
+          <span class="speaker-track-badge leaders">Leaders Track</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('evan')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/evan_mendenhall.jpeg" alt="Evan Mendenhall" class="speaker-photo">
           </div>
           <div class="speaker-name">Evan Mendenhall</div>
-          <div class="speaker-title">Founder, Professional AI Agents LLC</div>
+          <div class="speaker-title">Professional AI Agents LLC</div>
+          <span class="speaker-track-badge builders">Builders Track</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('tracie')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/tracie_foglia.jpeg" alt="Tracie Foglia" class="speaker-photo">
           </div>
           <div class="speaker-name">Tracie Foglia</div>
           <div class="speaker-title">Hawaii Employers Council</div>
+          <span class="speaker-track-badge panel">Talk Story Panel</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('paul')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/paul_dumais.jpeg" alt="Paul Dumais" class="speaker-photo">
           </div>
           <div class="speaker-name">Paul Dumais</div>
-          <div class="speaker-title">Co-Founder & CTO, Abra Hospitality Inc</div>
+          <div class="speaker-title">Abra Hospitality Inc</div>
+          <span class="speaker-track-badge panel">Talk Story Panel</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('janice')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/janice_ikeda.png" alt="Janice Ikeda" class="speaker-photo">
           </div>
           <div class="speaker-name">Janice Ikeda, MA</div>
-          <div class="speaker-title">Executive Director, Vibrant Hawaii</div>
+          <div class="speaker-title">Vibrant Hawaii</div>
+          <span class="speaker-track-badge panel">Talk Story Panel</span>
         </div>
 
-        <div class="speaker-card fade-in">
+        <div class="speaker-card fade-in" onclick="openSpeakerModal('nam')">
           <div class="speaker-photo-wrap">
             <img src="images/speakers/nam_vu.jpeg" alt="Nam Vu" class="speaker-photo">
           </div>
           <div class="speaker-name">Nam Vu</div>
-          <div class="speaker-title">President, Hawaii Center for AI</div>
+          <div class="speaker-title">Hawaii Center for AI</div>
+          <span class="speaker-track-badge panel">Talk Story Panel</span>
         </div>
+      </div>
+
+      <div class="tracks-cta" style="position: relative; z-index: 1;">
+        <a href="sessions.html" class="tracks-cta-link">
+          View Full Schedule
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+        <p style="margin-top: 16px;">
+          <a href="https://lu.ma/event/evt-JXQsDO3ZPfpk7sS" target="_blank" rel="noopener"
+            style="font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-primary); transition: color 0.3s;">
+            or register now
+          </a>
+        </p>
       </div>
     </div>
   </section>
@@ -1710,7 +2150,7 @@
           <div class="sponsor-tier-row">
             <a href="https://www.hawaiiwomenintech.org/" target="_blank" rel="noopener noreferrer"><img
                 src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech" style="height: 89px;"></a>
-            <a href="https://www.nimblebrain.ai/" target="_blank" rel="noopener noreferrer"><img
+            <a href="https://nimblebrain.ai" target="_blank" rel="noopener noreferrer"><img
                 src="images/logos/nimblebrain_logo_white.png" alt="Nimble Brain"></a>
             <a href="https://infragarden.com/" target="_blank" rel="noopener noreferrer"><img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden"></a>
           </div>
@@ -1906,6 +2346,59 @@
   </section>
 
   <!-- ========================================
+       Speaker Modal
+       ======================================== -->
+  <div class="speaker-modal-backdrop" id="modalBackdrop" onclick="closeSpeakerModal()"></div>
+  <div class="speaker-modal" id="speakerModal">
+    <div class="speaker-modal-accent" id="modalAccent"></div>
+    <button class="speaker-modal-close" onclick="closeSpeakerModal()" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="speaker-modal-inner">
+      <div class="modal-speaker-aside">
+        <div class="modal-photo-wrap">
+          <div class="modal-photo-ring" id="modalPhotoRing"></div>
+          <img src="" alt="" class="modal-photo" id="modalPhoto">
+        </div>
+        <div class="modal-speaker-name" id="modalName"></div>
+        <div class="modal-speaker-role">
+          <span id="modalRole"></span><br>
+          <span class="modal-speaker-company" id="modalCompany"></span>
+        </div>
+        <div class="modal-links" id="modalLinks">
+          <a href="#" class="modal-link" id="modalLinkLinkedin" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+          <a href="#" class="modal-link" id="modalLinkWebsite" target="_blank" rel="noopener noreferrer" title="Website">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="modal-session">
+        <div>
+          <span class="modal-track-label" id="modalTrackLabel">
+            <span class="modal-track-dot" id="modalTrackDot"></span>
+            <span id="modalTrackText"></span>
+          </span>
+          <span class="modal-session-time" id="modalTime"></span>
+        </div>
+        <h3 class="modal-session-title" id="modalSessionTitle"></h3>
+        <p class="modal-session-abstract" id="modalAbstract"></p>
+        <div>
+          <p class="modal-bio-heading">About the Speaker</p>
+          <p class="modal-bio" id="modalBio"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
        Footer
        ======================================== -->
   <footer class="footer">
@@ -1953,6 +2446,212 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Speaker Modal Data
+    // NOTE: Update bios, session titles, and abstracts as you finalize each speaker
+    const speakerData = {
+      benson: {
+        name: 'Benson Medina',
+        role: 'Director of Research & Development',
+        company: 'Hawaii County',
+        photo: 'images/speakers/benson_medina.jpeg',
+        photoStyle: '',
+        track: 'keynote',
+        trackLabel: 'Keynote Presentation',
+        time: '11:30 AM',
+        sessionTitle: 'Opening Keynote',
+        abstract: 'Setting the stage for AI adoption across Hawaii Island\u2019s public and private sectors. A look at how local government is approaching AI to serve the community better.',
+        bio: 'Benson Medina serves as the Director of Research & Development for Hawaii County, where he leads initiatives to modernize government services and explore emerging technologies for the benefit of Big Island residents.',
+        linkedin: 'https://www.linkedin.com/in/bensonmedina/',
+        website: '#'
+      },
+      michelle: {
+        name: 'Michelle Dumais',
+        role: 'Principal',
+        company: 'Kealani Solutions',
+        photo: 'images/speakers/michelle_dumais.jpeg',
+        photoStyle: 'object-position: center 20%; transform: scale(1.2);',
+        track: 'leaders',
+        trackLabel: 'Leaders Track \u2014 Workshop',
+        time: '1:00 PM',
+        sessionTitle: 'Before You Automate: Making AI Work in Your Business',
+        abstract: 'The technology works. The question is whether we\u2019re asking the right questions before we start building. This workshop gives business leaders a hands-on framework to figure out which AI investments are worth making \u2014 and which ones aren\u2019t. Not through theory. Through a structured process you\u2019ll actually use, right in the room.',
+        bio: 'Michelle is the founder of Kealani Solutions, a Hawai\u02BBi-based consultancy helping organizations simplify operations and adopt technology in practical, people-centered ways. With over 25 years of experience in supply chain, operations, and business transformation, she focuses on helping leaders make smart decisions about where technology truly fits \u2014 and where it doesn\u2019t yet. She works with businesses, government agencies, and community organizations across Hawai\u02BBi to build capability, improve workflows, and ensure technology actually gets used.',
+        linkedin: 'https://www.linkedin.com/in/mydumais/',
+        website: 'https://kealanisolutions.com'
+      },
+      binil: {
+        name: 'Binil Chacko',
+        role: 'Founder / Business Advisor',
+        company: 'Empower Potential / Hawaii SBDC',
+        photo: 'images/speakers/binil_chacko.jpeg',
+        photoStyle: '',
+        track: 'keynote',
+        trackLabel: 'Keynote Presentation',
+        time: '11:30 AM',
+        sessionTitle: 'Keynote Presentation',
+        abstract: 'AI is here \u2014 and it\u2019s the most powerful amplifier ever built. It scales your clarity, vision, and best ideas. It also scales your blind spots and every lie you\u2019ve been telling yourself about your business. This keynote combines a live AI demonstration with the strategic insights needed to harness this moment. See what AI can actually do today, understand why most people are underusing it, and leave with a clear-eyed view of what it takes to build an AI-powered business that lasts.',
+        bio: 'Binil Chacko is a Senior Business Advisor at Hawai\u02BBi SBDC and founder of Empower Potential. After launching his first business in 2011 and building Ascend, a marketing agency that worked with hundreds of businesses across growth strategy, operations, and brand development, he discovered that the biggest barrier to business success is rarely the business itself \u2014 it\u2019s the owner. He now helps leaders and entrepreneurs close the gap between who they are and what they\u2019re building.',
+        linkedin: 'https://www.linkedin.com/in/binilchacko/',
+        website: 'https://www.empowerpotential.co/'
+      },
+      mathew: {
+        name: 'Mathew Goldsborough',
+        role: 'Founder & CEO',
+        company: 'NimbleBrain',
+        photo: 'images/speakers/mathew_goldsborough.png',
+        photoStyle: '',
+        track: 'builders',
+        trackLabel: 'Builders Track \u2014 Workshop',
+        time: '1:00 PM',
+        sessionTitle: 'Business as Code: Build an AI Brain That Actually Knows Your Company',
+        abstract: 'Your AI tools forget everything \u2014 every conversation starts from scratch. What if your business had a brain? One place that knows your customers, your brand, your pipeline, and gets smarter every day. Learn the \u201CBusiness as Code\u201D pattern and build one live from scratch.',
+        bio: 'Mathew Goldsborough is the Founder & CEO of NimbleBrain, where he builds conversational automation powered by MCP. He is a community maintainer in the MCP ecosystem and creator of mpak, the open registry for MCP server bundles. Previously he co-founded Forever Oceans, spending a decade building the world\u2019s first vertically integrated open-ocean aquafarm from R&D through commercial launch. He has shipped mission-critical software at Lockheed Martin, led engineering at Daily Harvest, and spoken at TEDx Hawai\u02BBi.',
+        linkedin: 'https://www.linkedin.com/in/goldsborough/',
+        website: 'https://nimblebrain.ai'
+      },
+      ratna: {
+        name: 'Ratna Amin',
+        role: 'Owner',
+        company: 'Infragarden',
+        photo: 'images/speakers/ratna_amin.jpeg',
+        photoStyle: '',
+        track: 'leaders',
+        trackLabel: 'Leaders Track \u2014 Workshop',
+        time: '1:00 PM',
+        sessionTitle: 'The Human Architecture of AI Adoption',
+        abstract: 'AI adoption stalls without the right human architecture. In this hands-on workshop, leaders use visual planning to identify cultural friction points \u2014 trust deficits, skill gaps \u2014 that block transformation. Walk away with a Transformation Canvas: a visual roadmap prioritizing pilot opportunities and the leadership behaviors needed to foster psychological safety during rollout.',
+        bio: 'Ratna Amin is a systems facilitator who helps leaders design and lead change in their organizations and ecosystems, specializing in government and multi-stakeholder contexts.',
+        linkedin: 'https://www.linkedin.com/in/ratnaamin/',
+        website: 'https://infragarden.com/'
+      },
+      evan: {
+        name: 'Evan Mendenhall',
+        role: 'Founder',
+        company: 'Professional AI Agents LLC',
+        photo: 'images/speakers/evan_mendenhall.jpeg',
+        photoStyle: '',
+        track: 'builders',
+        trackLabel: 'Builders Track \u2014 Workshop',
+        time: '1:00 PM',
+        sessionTitle: 'Automating with AI Agents & n8n',
+        abstract: 'n8n is one of the most powerful automation tools available \u2014 making low-code and no-code solutions possible with a basic understanding of APIs and data parsing. In this hands-on workshop, see how AI agents can be deployed over a company\u2019s existing data to turn everyday workflows into automated pipelines.',
+        bio: 'Evan Mendenhall is the founder of Professional AI Agents LLC. He is a hands-on architect of voice-driven AI systems deployed across real-world industries like self-storage, sales, and media. His work blends deep technical fluency in full-stack dev, cloud infrastructure, and agentic LLM prompt engineering with a relentless drive to turn complexity into working products.',
+        linkedin: 'https://www.linkedin.com/in/evanmendenhall/',
+        website: '#'
+      },
+      tracie: {
+        name: 'Tracie Foglia',
+        role: 'Representative',
+        company: 'Hawaii Employers Council',
+        photo: 'images/speakers/tracie_foglia.jpeg',
+        photoStyle: '',
+        track: 'panel',
+        trackLabel: 'Talk Story Panel',
+        time: '3:00 PM',
+        sessionTitle: 'AI & the Future of Work',
+        abstract: 'Open discussion on how AI is reshaping work across industries in Hawai\u02BBi. Panelists share perspectives from hospitality, community development, and technology. Audience Q&A encouraged.',
+        bio: 'Tracie Foglia represents the Hawaii Employers Council, working with organizations across the state on workplace policy, compliance, and the evolving landscape of AI in the workplace.',
+        linkedin: 'https://www.linkedin.com/in/tracie-foglia/',
+        website: 'https://www.hecouncil.org/'
+      },
+      paul: {
+        name: 'Paul Dumais',
+        role: 'Co-Founder & CTO',
+        company: 'Abra Hospitality Inc',
+        photo: 'images/speakers/paul_dumais.jpeg',
+        photoStyle: '',
+        track: 'panel',
+        trackLabel: 'Talk Story Panel',
+        time: '3:00 PM',
+        sessionTitle: 'AI & the Future of Work',
+        abstract: 'Open discussion on how AI is reshaping work across industries in Hawai\u02BBi. Panelists share perspectives from hospitality, community development, and technology. Audience Q&A encouraged.',
+        bio: 'Paul Dumais is the Co-Founder and CTO of Abra Hospitality Inc, where he leads the development of AI-powered solutions for the hospitality industry.',
+        linkedin: 'https://www.linkedin.com/in/dumais/',
+        website: '#'
+      },
+      janice: {
+        name: 'Janice Ikeda, MA',
+        role: 'Executive Director',
+        company: 'Vibrant Hawaii',
+        photo: 'images/speakers/janice_ikeda.png',
+        photoStyle: '',
+        track: 'panel',
+        trackLabel: 'Talk Story Panel',
+        time: '3:00 PM',
+        sessionTitle: 'AI & the Future of Work',
+        abstract: 'Open discussion on how AI is reshaping work across industries in Hawai\u02BBi. Panelists share perspectives from hospitality, community development, and technology. Audience Q&A encouraged.',
+        bio: 'Janice Ikeda, MA, is the Executive Director of Vibrant Hawaii, a community organization dedicated to building a thriving, equitable future for Hawaii Island residents.',
+        linkedin: 'https://www.linkedin.com/in/janice-ikeda/',
+        website: 'https://vibranthawaii.org/'
+      },
+      nam: {
+        name: 'Nam Vu',
+        role: 'President',
+        company: 'Hawaii Center for AI',
+        photo: 'images/speakers/nam_vu.jpeg',
+        photoStyle: '',
+        track: 'panel',
+        trackLabel: 'Talk Story Panel',
+        time: '3:00 PM',
+        sessionTitle: 'AI & the Future of Work',
+        abstract: 'Open discussion on how AI is reshaping work across industries in Hawai\u02BBi. Panelists share perspectives from hospitality, community development, and technology. Audience Q&A encouraged.',
+        bio: 'Nam Vu is the President of the Hawaii Center for AI, an organization dedicated to advancing AI education, research, and adoption across the Hawaiian islands.',
+        linkedin: 'https://www.linkedin.com/in/namvu1/',
+        website: 'https://www.hawaiicenterforai.org/'
+      }
+    };
+
+    function openSpeakerModal(speakerId) {
+      const s = speakerData[speakerId];
+      if (!s) return;
+
+      document.getElementById('modalAccent').className = 'speaker-modal-accent ' + s.track;
+      document.getElementById('modalPhotoRing').className = 'modal-photo-ring ' + s.track;
+
+      const photo = document.getElementById('modalPhoto');
+      photo.src = s.photo;
+      photo.alt = s.name;
+      photo.style.cssText = s.photoStyle || '';
+
+      document.getElementById('modalName').textContent = s.name;
+      document.getElementById('modalRole').textContent = s.role;
+      document.getElementById('modalCompany').textContent = s.company;
+
+      const linkedinEl = document.getElementById('modalLinkLinkedin');
+      linkedinEl.href = s.linkedin || '#';
+      linkedinEl.style.display = (s.linkedin && s.linkedin !== '#') ? '' : 'none';
+
+      const websiteEl = document.getElementById('modalLinkWebsite');
+      websiteEl.href = s.website || '#';
+      websiteEl.style.display = (s.website && s.website !== '#') ? '' : 'none';
+
+      document.getElementById('modalTrackDot').className = 'modal-track-dot ' + s.track;
+      document.getElementById('modalTrackLabel').className = 'modal-track-label ' + s.track;
+      document.getElementById('modalTrackText').textContent = s.trackLabel;
+      document.getElementById('modalTime').textContent = s.time;
+      document.getElementById('modalSessionTitle').textContent = s.sessionTitle;
+
+      const abstract = document.getElementById('modalAbstract');
+      abstract.textContent = s.abstract;
+      abstract.className = 'modal-session-abstract ' + s.track;
+
+      document.getElementById('modalBio').textContent = s.bio;
+
+      document.getElementById('modalBackdrop').classList.add('active');
+      document.getElementById('speakerModal').classList.add('active');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeSpeakerModal() {
+      document.getElementById('modalBackdrop').classList.remove('active');
+      document.getElementById('speakerModal').classList.remove('active');
+      document.body.classList.remove('modal-open');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeSpeakerModal();
+    });
 
     // FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(button => {
