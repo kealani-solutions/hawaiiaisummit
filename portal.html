@@ -346,6 +346,103 @@
       color: rgba(255, 255, 255, 0.7);
     }
 
+    /* Attendee Directory */
+    .attendee-directory {
+      margin-top: 60px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .attendee-directory h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .attendee-directory .dir-subtitle {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .attendee-list {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .attendee-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .attendee-row:last-child { border-bottom: none; }
+
+    .attendee-row.is-you {
+      background: rgba(0, 212, 232, 0.06);
+    }
+
+    .attendee-name {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .attendee-row.is-you .attendee-name {
+      color: var(--color-primary);
+    }
+
+    .attendee-track {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+    }
+
+    .attendee-track.builders {
+      color: var(--color-primary);
+      border: 1px solid rgba(0, 212, 232, 0.4);
+    }
+
+    .attendee-track.leaders {
+      color: var(--color-secondary);
+      border: 1px solid rgba(255, 127, 80, 0.4);
+    }
+
+    .attendee-track.undecided {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .dir-counts {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+
+    .dir-count {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .dir-count .num {
+      font-size: 1.4rem;
+      margin-right: 4px;
+    }
+
+    .dir-count.builders { color: var(--color-primary); }
+    .dir-count.leaders { color: var(--color-secondary); }
+    .dir-count.undecided { color: rgba(255, 255, 255, 0.4); }
+
     @media (max-width: 768px) {
       .track-grid {
         grid-template-columns: 1fr;
@@ -355,6 +452,10 @@
         flex-direction: column;
         gap: 12px;
         text-align: center;
+      }
+
+      .dir-counts {
+        gap: 16px;
       }
     }
   </style>
@@ -449,6 +550,14 @@
       <button class="change-link" onclick="showSelection()">Change my selection</button>
     </div>
 
+    <!-- Attendee Directory (shown in both states) -->
+    <div class="attendee-directory" id="attendee-directory" style="display: none;">
+      <h3>Who&rsquo;s Coming</h3>
+      <p class="dir-subtitle">All registered attendees and their track selections</p>
+      <div class="dir-counts" id="dir-counts"></div>
+      <div class="attendee-list" id="attendee-list"></div>
+    </div>
+
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-app-compat.js"></script>
@@ -457,13 +566,13 @@
   <script>
     let auth, db, currentUser;
 
-    const loadingDiv = document.getElementById('loading');
-    const portalHeader = document.getElementById('portal-header');
-    const portalContent = document.getElementById('portal-content');
-    const selectionView = document.getElementById('selection-view');
-    const confirmationView = document.getElementById('confirmation-view');
+    var loadingDiv = document.getElementById('loading');
+    var portalHeader = document.getElementById('portal-header');
+    var portalContent = document.getElementById('portal-content');
+    var selectionView = document.getElementById('selection-view');
+    var confirmationView = document.getElementById('confirmation-view');
 
-    const trackData = {
+    var trackData = {
       builders: {
         label: 'Builders Track',
         sessions: [
@@ -508,14 +617,14 @@
       selectionView.style.display = 'none';
       confirmationView.style.display = 'block';
 
-      const data = trackData[track];
-      const badge = document.getElementById('conf-badge');
+      var data = trackData[track];
+      var badge = document.getElementById('conf-badge');
       badge.textContent = data.label;
       badge.className = 'confirmation-badge ' + track;
 
       document.getElementById('conf-heading').textContent = "You\u2019re in the " + data.label;
 
-      const sessionsDiv = document.getElementById('conf-sessions');
+      var sessionsDiv = document.getElementById('conf-sessions');
       sessionsDiv.innerHTML = data.sessions.map(function(s) {
         return '<div class="confirmation-session">' +
           '<img src="' + s.photo + '" alt=""' + (s.photoStyle ? ' style="' + s.photoStyle + '"' : '') + '>' +
@@ -533,17 +642,41 @@
       selectionView.style.display = 'block';
     }
 
-    async function selectTrack(track) {
-      const buttons = document.querySelectorAll('.btn-select');
-      buttons.forEach(function(b) { b.disabled = true; b.textContent = 'Saving...'; });
+    function sanitizeEmail(email) {
+      return email.toLowerCase().replace(/[.@]/g, '_');
+    }
 
-      try {
-        await db.collection('users').doc(currentUser.uid).set({
+    async function saveTrackSelection(track, userName) {
+      var trackDoc = {
+        email: currentUser.email.toLowerCase(),
+        name: userName || '',
+        track: track,
+        selectedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      // Write to both collections in parallel
+      await Promise.all([
+        db.collection('users').doc(currentUser.uid).set({
           email: currentUser.email,
           track: track,
           selectedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
+        }, { merge: true }),
+        db.collection('trackSelections').doc(sanitizeEmail(currentUser.email)).set(trackDoc, { merge: true })
+      ]);
+    }
+
+    async function selectTrack(track) {
+      var buttons = document.querySelectorAll('.btn-select');
+      buttons.forEach(function(b) { b.disabled = true; b.textContent = 'Saving...'; });
+
+      try {
+        // Get user name from Firestore
+        var userDoc = await db.collection('users').doc(currentUser.uid).get();
+        var userName = userDoc.exists ? (userDoc.data().name || '') : '';
+
+        await saveTrackSelection(track, userName);
         showConfirmation(track);
+        loadAttendeeDirectory(); // Refresh directory
       } catch (err) {
         buttons.forEach(function(b) { b.disabled = false; });
         document.querySelector('.track-card.builders .btn-select').textContent = 'Select Builders Track';
@@ -552,57 +685,165 @@
       }
     }
 
-    function showPortal(user) {
+    function renderAttendeeDirectory(attendees, currentEmail) {
+      var dirDiv = document.getElementById('attendee-directory');
+      var listDiv = document.getElementById('attendee-list');
+      var countsDiv = document.getElementById('dir-counts');
+
+      var builders = 0, leaders = 0, undecided = 0;
+      attendees.forEach(function(a) {
+        if (a.track === 'builders') builders++;
+        else if (a.track === 'leaders') leaders++;
+        else undecided++;
+      });
+
+      countsDiv.innerHTML =
+        '<div class="dir-count builders"><span class="num">' + builders + '</span> Builders</div>' +
+        '<div class="dir-count leaders"><span class="num">' + leaders + '</span> Leaders</div>' +
+        '<div class="dir-count undecided"><span class="num">' + undecided + '</span> Undecided</div>';
+
+      listDiv.innerHTML = attendees.map(function(a) {
+        var isYou = a.email === currentEmail;
+        var trackClass = a.track || 'undecided';
+        var trackLabel = a.track === 'builders' ? 'Builders' : a.track === 'leaders' ? 'Leaders' : '';
+        return '<div class="attendee-row' + (isYou ? ' is-you' : '') + '">' +
+          '<span class="attendee-name">' + escapeHtml(a.name) + (isYou ? ' (you)' : '') + '</span>' +
+          (trackLabel
+            ? '<span class="attendee-track ' + trackClass + '">' + trackLabel + '</span>'
+            : '<span class="attendee-track undecided">&mdash;</span>') +
+        '</div>';
+      }).join('');
+
+      dirDiv.style.display = 'block';
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    async function loadAttendeeDirectory() {
+      try {
+        // Fetch Luma attendees and Firestore track selections in parallel
+        var lumaPromise = fetch('/.netlify/functions/get-attendees').then(function(r) { return r.json(); });
+        var fsPromise = db.collection('trackSelections').get();
+
+        var results = await Promise.all([lumaPromise, fsPromise]);
+        var lumaData = results[0];
+        var fsSnapshot = results[1];
+
+        // Build Firestore overrides map (email -> track)
+        var fsOverrides = {};
+        fsSnapshot.forEach(function(doc) {
+          var d = doc.data();
+          if (d.email && d.track) {
+            fsOverrides[d.email.toLowerCase()] = d.track;
+          }
+        });
+
+        // Merge: Firestore selection overrides Luma preference
+        var attendees = (lumaData.attendees || []).map(function(a) {
+          var email = a.email.toLowerCase();
+          return {
+            name: a.name,
+            email: email,
+            track: fsOverrides[email] || a.lumaTrack || null
+          };
+        });
+
+        renderAttendeeDirectory(attendees, currentUser.email.toLowerCase());
+      } catch (err) {
+        // Silently fail — directory is supplementary
+      }
+    }
+
+    async function showPortal(user) {
       currentUser = user;
       loadingDiv.style.display = 'none';
       portalHeader.style.display = 'flex';
       portalContent.style.display = 'block';
       document.getElementById('user-email').textContent = user.email;
 
-      // Check localStorage for guest name from Luma (set during login)
+      // Check localStorage for guest data from Luma (set during login)
       var guestName = window.localStorage.getItem('guestName');
       var guestFirstName = window.localStorage.getItem('guestFirstName');
       var guestLastName = window.localStorage.getItem('guestLastName');
+      var guestAnswersRaw = window.localStorage.getItem('guestRegistrationAnswers');
+      var guestAnswers = guestAnswersRaw ? JSON.parse(guestAnswersRaw) : null;
 
       var userDocRef = db.collection('users').doc(user.uid);
-      userDocRef.get().then(function(doc) {
-        var data = doc.exists ? doc.data() : {};
+      var doc = await userDocRef.get();
+      var data = doc.exists ? doc.data() : {};
 
-        // Save name to Firestore if we have it from Luma and it's not already stored
-        if (guestName && !data.name) {
-          var nameFields = {
-            email: user.email,
-            name: guestName,
-            firstName: guestFirstName || '',
-            lastName: guestLastName || '',
-          };
-          userDocRef.set(nameFields, { merge: true });
-          data = Object.assign(data, nameFields);
-          window.localStorage.removeItem('guestName');
-          window.localStorage.removeItem('guestFirstName');
-          window.localStorage.removeItem('guestLastName');
+      // Save Luma data to Firestore if not already stored
+      var updates = {};
+      if (guestName && !data.name) {
+        updates.email = user.email;
+        updates.name = guestName;
+        updates.firstName = guestFirstName || '';
+        updates.lastName = guestLastName || '';
+      }
+      if (guestAnswers && !data.registrationAnswers) {
+        updates.registrationAnswers = guestAnswers;
+      }
+      if (Object.keys(updates).length > 0) {
+        await userDocRef.set(updates, { merge: true });
+        data = Object.assign(data, updates);
+        window.localStorage.removeItem('guestName');
+        window.localStorage.removeItem('guestFirstName');
+        window.localStorage.removeItem('guestLastName');
+        window.localStorage.removeItem('guestRegistrationAnswers');
+      }
+
+      // Display welcome with first name if available
+      var displayName = data.firstName || data.name || 'Attendee';
+      document.getElementById('welcome-heading').textContent = 'Welcome, ' + displayName;
+
+      if (data.track) {
+        // Already selected in Firestore — show confirmation
+        showConfirmation(data.track);
+        loadAttendeeDirectory();
+      } else {
+        // No Firestore selection — check Luma for a default
+        try {
+          var lumaRes = await fetch('/.netlify/functions/get-attendees');
+          var lumaData = await lumaRes.json();
+          var myEntry = (lumaData.attendees || []).find(function(a) {
+            return a.email.toLowerCase() === user.email.toLowerCase();
+          });
+
+          if (myEntry && myEntry.lumaTrack) {
+            // Auto-import Luma preference
+            var userName = data.name || guestName || '';
+            await saveTrackSelection(myEntry.lumaTrack, userName);
+            await userDocRef.set({ track: myEntry.lumaTrack }, { merge: true });
+
+            // Store all Luma registration answers if available
+            if (myEntry.registrationAnswers) {
+              await userDocRef.set({ registrationAnswers: myEntry.registrationAnswers }, { merge: true });
+            }
+
+            showConfirmation(myEntry.lumaTrack);
+          }
+          // If no Luma preference, stay on selection view
+        } catch (err) {
+          // If Luma fetch fails, just show selection view
         }
-
-        // Display welcome with first name if available
-        var displayName = data.firstName || data.name || 'Attendee';
-        document.getElementById('welcome-heading').textContent = 'Welcome, ' + displayName;
-
-        if (data.track) {
-          showConfirmation(data.track);
-        }
-      });
+        loadAttendeeDirectory();
+      }
     }
 
     async function initFirebase() {
-      const res = await fetch('/.netlify/functions/firebase-config');
-      const firebaseConfig = await res.json();
+      var res = await fetch('/.netlify/functions/firebase-config');
+      var firebaseConfig = await res.json();
       firebase.initializeApp(firebaseConfig);
       auth = firebase.auth();
       db = firebase.firestore();
       auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
       if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-        let email = window.localStorage.getItem('emailForSignIn');
+        var email = window.localStorage.getItem('emailForSignIn');
         if (!email) {
           email = window.prompt('Please confirm your email address');
         }

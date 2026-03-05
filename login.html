@@ -277,11 +277,14 @@
           return;
         }
 
-        // Store guest name from Luma for use after sign-in
+        // Store guest data from Luma for use after sign-in
         if (checkData.name) {
           window.localStorage.setItem('guestName', checkData.name);
           window.localStorage.setItem('guestFirstName', checkData.firstName || '');
           window.localStorage.setItem('guestLastName', checkData.lastName || '');
+        }
+        if (checkData.registrationAnswers) {
+          window.localStorage.setItem('guestRegistrationAnswers', JSON.stringify(checkData.registrationAnswers));
         }
 
         // Step 2: Send magic link via Firebase

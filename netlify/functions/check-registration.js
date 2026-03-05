@@ -58,6 +58,12 @@ exports.handler = async (event) => {
 
     if (matchedGuest) {
       const g = matchedGuest.guest;
+      const answers = g.registration_answers || [];
+      const registrationAnswers = {};
+      for (const a of answers) {
+        registrationAnswers[a.label] = a.value || '';
+      }
+
       return {
         statusCode: 200,
         headers,
@@ -66,6 +72,7 @@ exports.handler = async (event) => {
           name: g.name || g.user_name || '',
           firstName: g.user_first_name || '',
           lastName: g.user_last_name || '',
+          registrationAnswers: Object.keys(registrationAnswers).length > 0 ? registrationAnswers : null,
         }),
       };
     }
