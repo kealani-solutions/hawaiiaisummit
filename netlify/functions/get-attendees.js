@@ -60,7 +60,7 @@ exports.handler = async (event) => {
         }
 
         allGuests.push({
-          name: g.name || g.user_name || '',
+          name: g.name || g.user_name || [g.user_first_name, g.user_last_name].filter(Boolean).join(' ') || '',
           email: (g.email || g.user_email || '').toLowerCase(),
           lumaTrack: lumaTrack,
           registrationAnswers: Object.keys(registrationAnswers).length > 0 ? registrationAnswers : null,
@@ -70,13 +70,14 @@ exports.handler = async (event) => {
       nextCursor = data.next_cursor;
     } while (nextCursor);
 
-    // Sort alphabetically by name
-    allGuests.sort((a, b) => a.name.localeCompare(b.name));
+    // Filter out guests with no name and sort alphabetically
+    const namedGuests = allGuests.filter((g) => g.name.trim());
+    namedGuests.sort((a, b) => a.name.localeCompare(b.name));
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ attendees: allGuests }),
+      body: JSON.stringify({ attendees: namedGuests }),
     };
   } catch (err) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Internal server error' }) };

@@ -69,7 +69,7 @@ exports.handler = async (event) => {
         headers,
         body: JSON.stringify({
           registered: true,
-          name: g.name || g.user_name || '',
+          name: g.name || g.user_name || [g.user_first_name, g.user_last_name].filter(Boolean).join(' ') || '',
           firstName: g.user_first_name || '',
           lastName: g.user_last_name || '',
           registrationAnswers: Object.keys(registrationAnswers).length > 0 ? registrationAnswers : null,
