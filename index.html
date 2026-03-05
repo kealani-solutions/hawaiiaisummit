@@ -91,6 +91,40 @@
     rel="stylesheet">
 
   <style>
+    /* Top Nav */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 30px;
+      pointer-events: none;
+    }
+
+    .top-nav-login {
+      pointer-events: auto;
+      font-family: 'Bebas Neue', 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 8px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s;
+    }
+
+    .top-nav-login:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: rgba(0, 0, 0, 0.5);
+    }
+
     /* ========================================
        CSS Custom Properties - BOLD TEAL & CORAL NEON
        ======================================== */
@@ -1792,6 +1826,10 @@
 </head>
 
 <body>
+  <nav class="top-nav">
+    <a href="/login" class="top-nav-login">Attendee Login</a>
+  </nav>
+
   <!-- ========================================
        Hero Section
        ======================================== -->
