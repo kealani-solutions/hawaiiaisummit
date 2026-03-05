@@ -36,15 +36,15 @@ exports.handler = async (event) => {
     }
 
     const data = await response.json();
-    let found = false;
+    let matchedGuest = null;
 
     // Check current page
     const guests = data.entries || [];
-    found = guests.some((g) => g.guest?.email?.toLowerCase() === email.toLowerCase());
+    matchedGuest = guests.find((g) => g.guest?.email?.toLowerCase() === email.toLowerCase());
 
     // Paginate if needed
     let nextCursor = data.next_cursor;
-    while (!found && nextCursor) {
+    while (!matchedGuest && nextCursor) {
       const nextUrl = `${url}&pagination_cursor=${nextCursor}`;
       const nextResponse = await fetch(nextUrl, {
         headers: { 'x-luma-api-key': LUMA_API_KEY },
@@ -52,14 +52,28 @@ exports.handler = async (event) => {
       if (!nextResponse.ok) break;
       const nextData = await nextResponse.json();
       const nextGuests = nextData.entries || [];
-      found = nextGuests.some((g) => g.guest?.email?.toLowerCase() === email.toLowerCase());
+      matchedGuest = nextGuests.find((g) => g.guest?.email?.toLowerCase() === email.toLowerCase());
       nextCursor = nextData.next_cursor;
+    }
+
+    if (matchedGuest) {
+      const g = matchedGuest.guest;
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          registered: true,
+          name: g.name || g.user_name || '',
+          firstName: g.user_first_name || '',
+          lastName: g.user_last_name || '',
+        }),
+      };
     }
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ registered: found }),
+      body: JSON.stringify({ registered: false }),
     };
   } catch (err) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Internal server error' }) };

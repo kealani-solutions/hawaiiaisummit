@@ -375,8 +375,8 @@
     <!-- State 1: Track Selection -->
     <div id="selection-view">
       <div class="portal-welcome">
-        <h2>Choose Your Track</h2>
-        <p>The afternoon workshops run in parallel — pick the track that fits you best.</p>
+        <h2 id="welcome-heading">Welcome, Attendee</h2>
+        <p>The afternoon workshops run in parallel &mdash; pick the track that fits you best.</p>
       </div>
 
       <div class="track-grid">
@@ -559,9 +559,36 @@
       portalContent.style.display = 'block';
       document.getElementById('user-email').textContent = user.email;
 
-      db.collection('users').doc(user.uid).get().then(function(doc) {
-        if (doc.exists && doc.data().track) {
-          showConfirmation(doc.data().track);
+      // Check localStorage for guest name from Luma (set during login)
+      var guestName = window.localStorage.getItem('guestName');
+      var guestFirstName = window.localStorage.getItem('guestFirstName');
+      var guestLastName = window.localStorage.getItem('guestLastName');
+
+      var userDocRef = db.collection('users').doc(user.uid);
+      userDocRef.get().then(function(doc) {
+        var data = doc.exists ? doc.data() : {};
+
+        // Save name to Firestore if we have it from Luma and it's not already stored
+        if (guestName && !data.name) {
+          var nameFields = {
+            email: user.email,
+            name: guestName,
+            firstName: guestFirstName || '',
+            lastName: guestLastName || '',
+          };
+          userDocRef.set(nameFields, { merge: true });
+          data = Object.assign(data, nameFields);
+          window.localStorage.removeItem('guestName');
+          window.localStorage.removeItem('guestFirstName');
+          window.localStorage.removeItem('guestLastName');
+        }
+
+        // Display welcome with first name if available
+        var displayName = data.firstName || data.name || 'Attendee';
+        document.getElementById('welcome-heading').textContent = 'Welcome, ' + displayName;
+
+        if (data.track) {
+          showConfirmation(data.track);
         }
       });
     }
