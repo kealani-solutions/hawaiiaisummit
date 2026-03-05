@@ -49,7 +49,7 @@
       letter-spacing: 0.1em;
     }
 
-    .portal-header a { text-decoration: none; }
+    .portal-header a { text-decoration: none; color: inherit; }
 
     .header-right {
       display: flex;
@@ -93,14 +93,14 @@
 
     .portal-content {
       display: none;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 50px 20px;
+      padding: 50px 20px 80px;
     }
 
     .portal-welcome {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 40px;
     }
 
     .portal-welcome h2 {
@@ -117,122 +117,240 @@
       font-size: 1.1rem;
     }
 
-    .portal-grid {
+    /* Track Selection Grid */
+    .track-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 30px;
-      margin-bottom: 50px;
     }
 
-    .portal-card {
+    .track-card {
       background: rgba(0, 0, 0, 0.4);
-      border: 2px solid rgba(0, 212, 232, 0.3);
-      padding: 35px 30px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      padding: 0;
       transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
     }
 
-    .portal-card:hover {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 30px rgba(0, 212, 232, 0.2);
+    .track-card:hover {
+      box-shadow: 0 0 30px rgba(0, 212, 232, 0.15);
     }
 
-    .portal-card h3 {
+    .track-card.builders { border-color: rgba(0, 212, 232, 0.3); }
+    .track-card.builders:hover { border-color: var(--color-primary); }
+    .track-card.leaders { border-color: rgba(255, 127, 80, 0.3); }
+    .track-card.leaders:hover { border-color: var(--color-secondary); }
+
+    .track-card-header {
+      padding: 30px 30px 20px;
+    }
+
+    .track-card.builders .track-card-header h3 { color: var(--color-primary); }
+    .track-card.leaders .track-card-header h3 { color: var(--color-secondary); }
+
+    .track-card-header h3 {
       font-family: var(--font-display);
-      font-size: 1.4rem;
+      font-size: 1.8rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--color-secondary);
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
-    .portal-card p {
-      color: rgba(255, 255, 255, 0.7);
+    .track-tagline {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .track-sessions {
+      padding: 0 30px 20px;
+      flex: 1;
+    }
+
+    .track-session {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .track-session-photo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .track-session-info h4 {
+      font-family: var(--font-family);
       font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 2px;
+      line-height: 1.3;
     }
 
-    .coming-soon {
-      display: inline-block;
-      margin-top: 12px;
-      font-family: var(--font-display);
+    .track-session-speaker {
       font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-    }
-
-    .set-password-section {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 35px 30px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 2px solid rgba(255, 127, 80, 0.3);
-    }
-
-    .set-password-section h3 {
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.5);
       margin-bottom: 8px;
     }
 
-    .set-password-section .desc {
+    .track-session-abstract {
+      font-size: 0.85rem;
       color: rgba(255, 255, 255, 0.6);
-      font-size: 0.9rem;
-      margin-bottom: 20px;
+      line-height: 1.5;
+      font-weight: 500;
     }
 
-    .set-password-section input {
-      width: 100%;
-      padding: 12px 14px;
-      font-family: var(--font-family);
-      font-size: 1rem;
-      font-weight: 600;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 127, 80, 0.4);
-      color: var(--color-white);
-      outline: none;
-      margin-bottom: 12px;
-      transition: border-color 0.3s;
+    .track-card-footer {
+      padding: 0 30px 30px;
     }
 
-    .set-password-section input:focus { border-color: var(--color-secondary); }
-    .set-password-section input::placeholder { color: rgba(255, 255, 255, 0.4); }
-
-    .btn-set-pw {
+    .btn-select {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       font-family: var(--font-display);
-      font-size: 1rem;
+      font-size: 1.1rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      border: 2px solid var(--color-secondary);
+      border: 2px solid;
       background: transparent;
-      color: var(--color-secondary);
       cursor: pointer;
       transition: all 0.3s;
     }
 
-    .btn-set-pw:hover {
+    .track-card.builders .btn-select {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .track-card.builders .btn-select:hover {
+      background: var(--color-primary);
+      color: var(--color-dark);
+    }
+
+    .track-card.leaders .btn-select {
+      border-color: var(--color-secondary);
+      color: var(--color-secondary);
+    }
+    .track-card.leaders .btn-select:hover {
       background: var(--color-secondary);
       color: white;
     }
 
-    .pw-message {
-      margin-top: 12px;
-      font-size: 0.9rem;
+    .btn-select:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Confirmation State */
+    .confirmation {
       display: none;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    .pw-message.success { display: block; color: var(--color-primary); }
-    .pw-message.error { display: block; color: var(--color-secondary); }
+    .confirmation-badge {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 6px 18px;
+      margin-bottom: 20px;
+    }
 
-    .has-password-note {
+    .confirmation-badge.builders {
       color: var(--color-primary);
-      font-size: 0.9rem;
+      border: 2px solid var(--color-primary);
     }
 
-    @media (max-width: 600px) {
+    .confirmation-badge.leaders {
+      color: var(--color-secondary);
+      border: 2px solid var(--color-secondary);
+    }
+
+    .confirmation h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .confirmation > p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1rem;
+      margin-bottom: 35px;
+    }
+
+    .confirmation-sessions {
+      text-align: left;
+    }
+
+    .confirmation-session {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .confirmation-session img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .confirmation-session h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .confirmation-session .speaker {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 6px;
+    }
+
+    .confirmation-session .abstract {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .change-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-family);
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .change-link:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      .track-grid {
+        grid-template-columns: 1fr;
+      }
+
       .portal-header {
         flex-direction: column;
         gap: 12px;
@@ -253,69 +371,207 @@
   </header>
 
   <div class="portal-content" id="portal-content">
-    <div class="portal-welcome">
-      <h2>Welcome, Attendee</h2>
-      <p>Your hub for summit materials, schedule details, and connections.</p>
+
+    <!-- State 1: Track Selection -->
+    <div id="selection-view">
+      <div class="portal-welcome">
+        <h2>Choose Your Track</h2>
+        <p>The afternoon workshops run in parallel — pick the track that fits you best.</p>
+      </div>
+
+      <div class="track-grid">
+        <!-- Builders Track -->
+        <div class="track-card builders">
+          <div class="track-card-header">
+            <h3>Builders Track</h3>
+            <span class="track-tagline">Hands-on. Technical. Build something real.</span>
+          </div>
+          <div class="track-sessions">
+            <div class="track-session">
+              <img src="images/speakers/mathew_goldsborough.png" alt="Mathew Goldsborough" class="track-session-photo">
+              <div class="track-session-info">
+                <h4>Business as Code: Build an AI Brain That Actually Knows Your Company</h4>
+                <div class="track-session-speaker">Mathew Goldsborough &mdash; Founder & CEO, NimbleBrain</div>
+                <p class="track-session-abstract">Your AI tools forget everything &mdash; every conversation starts from scratch. What if your business had a brain? Learn the &ldquo;Business as Code&rdquo; pattern and build one live from scratch.</p>
+              </div>
+            </div>
+            <div class="track-session">
+              <img src="images/speakers/evan_mendenhall.jpeg" alt="Evan Mendenhall" class="track-session-photo">
+              <div class="track-session-info">
+                <h4>Automating with AI Agents & n8n</h4>
+                <div class="track-session-speaker">Evan Mendenhall &mdash; Founder, Professional AI Agents LLC</div>
+                <p class="track-session-abstract">n8n is one of the most powerful automation tools available &mdash; making low-code and no-code solutions possible. See how AI agents can be deployed over existing company data to turn everyday workflows into automated pipelines.</p>
+              </div>
+            </div>
+          </div>
+          <div class="track-card-footer">
+            <button class="btn-select" onclick="selectTrack('builders')">Select Builders Track</button>
+          </div>
+        </div>
+
+        <!-- Leaders Track -->
+        <div class="track-card leaders">
+          <div class="track-card-header">
+            <h3>Leaders Track</h3>
+            <span class="track-tagline">Strategic. Practical. Lead the change.</span>
+          </div>
+          <div class="track-sessions">
+            <div class="track-session">
+              <img src="images/speakers/michelle_dumais.jpeg" alt="Michelle Dumais" class="track-session-photo" style="object-position: center 20%;">
+              <div class="track-session-info">
+                <h4>Before You Automate: Making AI Work in Your Business</h4>
+                <div class="track-session-speaker">Michelle Dumais &mdash; Principal, Kealani Solutions</div>
+                <p class="track-session-abstract">The technology works. The question is whether we&rsquo;re asking the right questions before we start building. A hands-on framework to figure out which AI investments are worth making &mdash; and which ones aren&rsquo;t.</p>
+              </div>
+            </div>
+            <div class="track-session">
+              <img src="images/speakers/ratna_amin.jpeg" alt="Ratna Amin" class="track-session-photo">
+              <div class="track-session-info">
+                <h4>The Human Architecture of AI Adoption</h4>
+                <div class="track-session-speaker">Ratna Amin &mdash; Owner, Infragarden</div>
+                <p class="track-session-abstract">AI adoption stalls without the right human architecture. Use visual planning to identify cultural friction points and walk away with a Transformation Canvas for your organization.</p>
+              </div>
+            </div>
+          </div>
+          <div class="track-card-footer">
+            <button class="btn-select" onclick="selectTrack('leaders')">Select Leaders Track</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="portal-grid">
-      <div class="portal-card">
-        <h3>Event Schedule</h3>
-        <p>Detailed session schedule with room assignments and speaker bios.</p>
-        <span class="coming-soon">Coming Soon</span>
-      </div>
-      <div class="portal-card">
-        <h3>Workshop Materials</h3>
-        <p>Pre-event prep guides and post-event resources for your track.</p>
-        <span class="coming-soon">Coming Soon</span>
-      </div>
-      <div class="portal-card">
-        <h3>Attendee Directory</h3>
-        <p>Connect with fellow attendees before the event.</p>
-        <span class="coming-soon">Coming Soon</span>
-      </div>
+    <!-- State 2: Confirmation -->
+    <div id="confirmation-view" class="confirmation">
+      <div class="confirmation-badge" id="conf-badge"></div>
+      <h2 id="conf-heading"></h2>
+      <p>You&rsquo;re all set. See you on March 12 at the Arc of Hilo.</p>
+      <div class="confirmation-sessions" id="conf-sessions"></div>
+      <button class="change-link" onclick="showSelection()">Change my selection</button>
     </div>
 
-    <div class="set-password-section" id="set-password-section">
-      <h3>Set a Password</h3>
-      <p class="desc">Optional: set a password so you can log in without a magic link next time.</p>
-      <form id="set-password-form">
-        <input type="password" id="new-password" placeholder="Choose a password (min 6 characters)" minlength="6" required>
-        <input type="password" id="confirm-password" placeholder="Confirm password" minlength="6" required>
-        <button type="submit" class="btn-set-pw">Set Password</button>
-      </form>
-      <div id="pw-message" class="pw-message"></div>
-    </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore-compat.js"></script>
   <script>
-    let auth;
+    let auth, db, currentUser;
 
     const loadingDiv = document.getElementById('loading');
     const portalHeader = document.getElementById('portal-header');
     const portalContent = document.getElementById('portal-content');
-    const setPasswordSection = document.getElementById('set-password-section');
+    const selectionView = document.getElementById('selection-view');
+    const confirmationView = document.getElementById('confirmation-view');
+
+    const trackData = {
+      builders: {
+        label: 'Builders Track',
+        sessions: [
+          {
+            title: 'Business as Code: Build an AI Brain That Actually Knows Your Company',
+            speaker: 'Mathew Goldsborough \u2014 Founder & CEO, NimbleBrain',
+            photo: 'images/speakers/mathew_goldsborough.png',
+            photoStyle: '',
+            abstract: 'Your AI tools forget everything \u2014 every conversation starts from scratch. What if your business had a brain? Learn the \u201CBusiness as Code\u201D pattern and build one live from scratch.'
+          },
+          {
+            title: 'Automating with AI Agents & n8n',
+            speaker: 'Evan Mendenhall \u2014 Founder, Professional AI Agents LLC',
+            photo: 'images/speakers/evan_mendenhall.jpeg',
+            photoStyle: '',
+            abstract: 'n8n is one of the most powerful automation tools available \u2014 making low-code and no-code solutions possible. See how AI agents can be deployed over existing company data to turn everyday workflows into automated pipelines.'
+          }
+        ]
+      },
+      leaders: {
+        label: 'Leaders Track',
+        sessions: [
+          {
+            title: 'Before You Automate: Making AI Work in Your Business',
+            speaker: 'Michelle Dumais \u2014 Principal, Kealani Solutions',
+            photo: 'images/speakers/michelle_dumais.jpeg',
+            photoStyle: 'object-position: center 20%;',
+            abstract: 'The technology works. The question is whether we\u2019re asking the right questions before we start building. A hands-on framework to figure out which AI investments are worth making \u2014 and which ones aren\u2019t.'
+          },
+          {
+            title: 'The Human Architecture of AI Adoption',
+            speaker: 'Ratna Amin \u2014 Owner, Infragarden',
+            photo: 'images/speakers/ratna_amin.jpeg',
+            photoStyle: '',
+            abstract: 'AI adoption stalls without the right human architecture. Use visual planning to identify cultural friction points and walk away with a Transformation Canvas for your organization.'
+          }
+        ]
+      }
+    };
+
+    function showConfirmation(track) {
+      selectionView.style.display = 'none';
+      confirmationView.style.display = 'block';
+
+      const data = trackData[track];
+      const badge = document.getElementById('conf-badge');
+      badge.textContent = data.label;
+      badge.className = 'confirmation-badge ' + track;
+
+      document.getElementById('conf-heading').textContent = "You\u2019re in the " + data.label;
+
+      const sessionsDiv = document.getElementById('conf-sessions');
+      sessionsDiv.innerHTML = data.sessions.map(function(s) {
+        return '<div class="confirmation-session">' +
+          '<img src="' + s.photo + '" alt=""' + (s.photoStyle ? ' style="' + s.photoStyle + '"' : '') + '>' +
+          '<div>' +
+            '<h4>' + s.title + '</h4>' +
+            '<div class="speaker">' + s.speaker + '</div>' +
+            '<p class="abstract">' + s.abstract + '</p>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function showSelection() {
+      confirmationView.style.display = 'none';
+      selectionView.style.display = 'block';
+    }
+
+    async function selectTrack(track) {
+      const buttons = document.querySelectorAll('.btn-select');
+      buttons.forEach(function(b) { b.disabled = true; b.textContent = 'Saving...'; });
+
+      try {
+        await db.collection('users').doc(currentUser.uid).set({
+          email: currentUser.email,
+          track: track,
+          selectedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        showConfirmation(track);
+      } catch (err) {
+        buttons.forEach(function(b) { b.disabled = false; });
+        document.querySelector('.track-card.builders .btn-select').textContent = 'Select Builders Track';
+        document.querySelector('.track-card.leaders .btn-select').textContent = 'Select Leaders Track';
+        alert('Something went wrong. Please try again.');
+      }
+    }
 
     function showPortal(user) {
+      currentUser = user;
       loadingDiv.style.display = 'none';
       portalHeader.style.display = 'flex';
       portalContent.style.display = 'block';
       document.getElementById('user-email').textContent = user.email;
 
-      const hasPassword = user.providerData.some(p => p.providerId === 'password');
-      if (hasPassword) {
-        setPasswordSection.innerHTML = '<p class="has-password-note">You have a password set. You can log in with your email and password next time.</p>';
-      }
+      db.collection('users').doc(user.uid).get().then(function(doc) {
+        if (doc.exists && doc.data().track) {
+          showConfirmation(doc.data().track);
+        }
+      });
     }
 
-    // Load Firebase config from serverless function, then handle auth
     async function initFirebase() {
       const res = await fetch('/.netlify/functions/firebase-config');
       const firebaseConfig = await res.json();
       firebase.initializeApp(firebaseConfig);
       auth = firebase.auth();
+      db = firebase.firestore();
       auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
       if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
@@ -325,20 +581,20 @@
         }
         if (email) {
           auth.signInWithEmailLink(email, window.location.href)
-            .then((result) => {
+            .then(function(result) {
               window.localStorage.removeItem('emailForSignIn');
               window.history.replaceState({}, document.title, '/portal');
               showPortal(result.user);
             })
-            .catch((error) => {
+            .catch(function() {
               loadingDiv.textContent = 'Sign-in link expired or invalid. Please request a new one.';
-              setTimeout(() => { window.location.href = '/login'; }, 3000);
+              setTimeout(function() { window.location.href = '/login'; }, 3000);
             });
         } else {
           window.location.href = '/login';
         }
       } else {
-        auth.onAuthStateChanged((user) => {
+        auth.onAuthStateChanged(function(user) {
           if (user) {
             showPortal(user);
           } else {
@@ -350,40 +606,10 @@
 
     initFirebase();
 
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      auth.signOut().then(() => {
+    document.getElementById('logout-btn').addEventListener('click', function() {
+      auth.signOut().then(function() {
         window.location.href = '/';
       });
-    });
-
-    document.getElementById('set-password-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const pw = document.getElementById('new-password').value;
-      const confirm = document.getElementById('confirm-password').value;
-      const msgDiv = document.getElementById('pw-message');
-
-      if (pw !== confirm) {
-        msgDiv.textContent = 'Passwords do not match.';
-        msgDiv.className = 'pw-message error';
-        return;
-      }
-
-      try {
-        const user = auth.currentUser;
-        const credential = firebase.auth.EmailAuthProvider.credential(user.email, pw);
-        await user.linkWithCredential(credential);
-        msgDiv.textContent = 'Password set! You can use it to log in next time.';
-        msgDiv.className = 'pw-message success';
-        document.getElementById('set-password-form').style.display = 'none';
-      } catch (err) {
-        if (err.code === 'auth/provider-already-linked') {
-          msgDiv.textContent = 'You already have a password set.';
-          msgDiv.className = 'pw-message error';
-        } else {
-          msgDiv.textContent = 'Failed to set password. Please try again.';
-          msgDiv.className = 'pw-message error';
-        }
-      }
     });
   </script>
 </body>
