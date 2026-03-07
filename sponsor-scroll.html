@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hawaii Island AI Summit — Sponsors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Bebas+Neue&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0A0A0A 0%, #0D1B1E 30%, #006877 70%, #FF7F50 100%);
+    background-size: 400% 400%;
+    animation: bgShift 14s ease infinite;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 85%, rgba(0, 212, 232, 0.25) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(255, 127, 80, 0.25) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(255, 217, 61, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes bgShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ── Header: pinned top, compact ── */
+  .header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2.5vh 0 1.5vh;
+    flex-shrink: 0;
+  }
+
+  .header-label {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 0.3vh;
+  }
+
+  .header-title {
+    color: #FFFFFF;
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    letter-spacing: 3px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  /* Thin animated accent below header */
+  .header-accent {
+    margin-top: 1.5vh;
+    height: 3px;
+    background: linear-gradient(90deg, #00D4E8, #FF7F50, #FFD93D, #00D4E8);
+    background-size: 300% 100%;
+    animation: accentGlow 4s linear infinite;
+  }
+
+  @keyframes accentGlow {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── Scroll area: fills remaining 80%+ of viewport ── */
+  .scroll-area {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .scroll-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: marquee 70s linear infinite;
+  }
+
+  .scroll-group {
+    display: flex;
+    align-items: center;
+    gap: clamp(50px, 8vw, 120px);
+    padding: 0 clamp(25px, 4vw, 60px);
+  }
+
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── Sponsor items ── */
+  .sponsor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2vh;
+    flex-shrink: 0;
+  }
+
+  .sponsor img {
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  /*
+    Logo heights use vh so they scale to fill the screen.
+    80% of viewport is the scroll area → logos target ~40-60% of that.
+  */
+  .sponsor.presented img  { height: clamp(100px, 35vh, 320px); max-width: 45vw; }
+  .sponsor.ohana img      { height: clamp(90px, 32vh, 300px); max-width: 42vw; }
+  .sponsor.mana img       { height: clamp(80px, 28vh, 260px); max-width: 40vw; }
+  .sponsor.hoolauna img   { height: clamp(60px, 22vh, 200px); max-width: 35vw; }
+  .sponsor.community img  { height: clamp(50px, 20vh, 180px); max-width: 32vw; }
+
+  .sponsor-tier-badge {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(0.7rem, 1.5vw, 1.1rem);
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .tier-presented  { color: #FFD93D; }
+  .tier-ohana      { color: #FFD93D; }
+  .tier-mana       { color: #FF7F50; }
+  .tier-hoolauna   { color: #FF9A70; }
+  .tier-community  { color: #4dd8e8; }
+
+  /* ── Separator between sponsors ── */
+  .sep {
+    width: 2px;
+    height: 6vh;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  /* ── Bottom accent ── */
+  .bottom-accent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00D4E8, #FF7F50, #FFD93D, #00D4E8);
+    background-size: 300% 100%;
+    animation: accentGlow 4s linear infinite;
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header: compact, top-pinned -->
+  <div class="header">
+    <div class="header-label">Mahalo to Our Sponsors &amp; Partners</div>
+    <div class="header-title">Hawaii Island AI Summit</div>
+    <div class="header-accent"></div>
+  </div>
+
+  <!-- Logos: fill remaining viewport -->
+  <div class="scroll-area">
+    <div class="scroll-track">
+      <!-- First set -->
+      <div class="scroll-group">
+        <div class="sponsor presented">
+          <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
+          <span class="sponsor-tier-badge tier-presented">Presented by</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor ohana">
+          <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kamaʻaina Tech Solutions">
+          <span class="sponsor-tier-badge tier-ohana">'Ohana Sponsor</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor mana">
+          <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems">
+          <span class="sponsor-tier-badge tier-mana">Mana Sponsor</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor hoolauna">
+          <img src="images/logos/blue_startups_logo.png" alt="Blue Startups">
+          <span class="sponsor-tier-badge tier-hoolauna">Ho'olauna Coffee</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/netcom_logo.png" alt="Netcom">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/path_logo.png" alt="Path">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/htdc_logo.png" alt="HTDC">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/waiakea_water_logo.png" alt="Waiakea Hawaiian Volcanic Water">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="scroll-group">
+        <div class="sponsor presented">
+          <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
+          <span class="sponsor-tier-badge tier-presented">Presented by</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor ohana">
+          <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kamaʻaina Tech Solutions">
+          <span class="sponsor-tier-badge tier-ohana">'Ohana Sponsor</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor mana">
+          <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems">
+          <span class="sponsor-tier-badge tier-mana">Mana Sponsor</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor hoolauna">
+          <img src="images/logos/blue_startups_logo.png" alt="Blue Startups">
+          <span class="sponsor-tier-badge tier-hoolauna">Ho'olauna Coffee</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/netcom_logo.png" alt="Netcom">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/path_logo.png" alt="Path">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/htdc_logo.png" alt="HTDC">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+        <div class="sep"></div>
+        <div class="sponsor community">
+          <img src="images/logos/waiakea_water_logo.png" alt="Waiakea Hawaiian Volcanic Water">
+          <span class="sponsor-tier-badge tier-community">Community</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-accent"></div>
+
+</body>
+</html>
