@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hawaii Island AI Summit 2026 — Attendee Badges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #006877;
+    --teal-dark: #005562;
+    --coral: #FF7F50;
+    --dark: #2D3132;
+    --white: #F9FBFB;
+    --badge-w: 4in;
+    --badge-h: 3in;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #e8ecee;
+    color: var(--dark);
+  }
+
+  /* ── Screen-only Controls ──────────────────────── */
+  .controls {
+    max-width: 720px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .controls h1 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--teal);
+    margin-bottom: .25rem;
+  }
+  .controls p {
+    font-size: .85rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  .controls textarea {
+    width: 100%;
+    min-height: 160px;
+    font-family: 'DM Sans', monospace;
+    font-size: .85rem;
+    border: 2px solid #d0d5d6;
+    border-radius: 8px;
+    padding: .75rem;
+    resize: vertical;
+    line-height: 1.6;
+  }
+  .controls textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+  .controls .actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .controls button {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: .9rem;
+    padding: .6rem 1.4rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform .1s;
+  }
+  .controls button:active { transform: scale(.97); }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-print { background: var(--coral); color: #fff; }
+  .controls .hint {
+    font-size: .75rem;
+    color: #999;
+    flex-basis: 100%;
+    margin-top: .25rem;
+  }
+
+  /* ── Sheet (both front and back) ───────────────── */
+  .print-area {
+    max-width: 8.5in;
+    margin: 2rem auto;
+  }
+
+  .sheet {
+    width: 8.5in;
+    height: 11in;
+    background: #fff;
+    margin: 0 auto 2rem;
+    padding: 1in 0.25in;
+    display: grid;
+    grid-template-columns: repeat(2, var(--badge-w));
+    grid-template-rows: repeat(3, var(--badge-h));
+    justify-content: center;
+    align-content: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,.1);
+    position: relative;
+  }
+
+  .sheet-label {
+    position: absolute;
+    top: 0.35in;
+    left: 0.5in;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 9pt;
+    color: #bbb;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ═══════════════════════════════════════════════
+     FRONT BADGE
+     ═══════════════════════════════════════════════ */
+  .badge {
+    width: var(--badge-w);
+    height: var(--badge-h);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px dashed #c0c0c0;
+  }
+
+  .badge-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 0.2in 0.12in;
+  }
+
+  .badge-banner {
+    width: calc(100% + 0.4in);
+    margin-left: -0.2in;
+    margin-right: -0.2in;
+    height: 0.6in;
+    object-fit: cover;
+    object-position: center;
+    flex-shrink: 0;
+  }
+
+  .badge-name {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .badge-firstname {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 32pt;
+    line-height: 1.05;
+    color: var(--dark);
+    max-width: 3.5in;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .badge-lastname {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    font-size: 18pt;
+    line-height: 1.2;
+    color: #555;
+    margin-top: 2px;
+    max-width: 3.5in;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .badge-firstname.long-name { font-size: 25pt; }
+  .badge-lastname.long-name { font-size: 14pt; }
+
+  /* Front bottom sponsor strip */
+  .badge-front-sponsors {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3in;
+    width: 100%;
+    padding-top: 0.06in;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .badge-front-sponsors img {
+    height: 0.32in;
+    width: auto;
+    object-fit: contain;
+  }
+  .badge-front-sponsors img.invert-logo {
+    filter: brightness(0);
+  }
+
+  /* ═══════════════════════════════════════════════
+     BACK BADGE
+     ═══════════════════════════════════════════════ */
+  .badge-back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    padding: 0.15in 0.15in;
+    gap: 0.06in;
+  }
+
+  /* Top row: QR left + Mana sponsor right */
+  .back-top-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 0.15in;
+    flex-shrink: 0;
+  }
+
+  .back-qr {
+    flex-shrink: 0;
+  }
+  .back-qr canvas {
+    width: 0.7in;
+    height: 0.7in;
+  }
+
+  .back-top-sponsor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.7in;
+  }
+
+  .back-sponsors {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05in;
+    width: 100%;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .back-tier {
+    text-align: center;
+    width: 100%;
+  }
+
+  .back-tier-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 6pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #aaa;
+    margin-bottom: 0.04in;
+  }
+
+  .back-tier-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.12in;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .back-tier-logos img {
+    height: 0.33in;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Invert white-on-transparent logos to black for print */
+  .back-tier-logos img.invert-logo {
+    filter: brightness(0);
+  }
+
+  /* Blue background pill for Blue Startups logo */
+  .back-tier-logos img.blue-bg-logo {
+    background: #0057B8;
+    border-radius: 4px;
+    padding: 0.03in 0.08in;
+  }
+
+  /* Tier-specific logo sizes (all doubled) */
+  .back-tier-logos.tier-mana { margin-top: 12px; }
+  .back-tier-logos.tier-mana img { height: 0.39in; }
+  .back-tier.tier-hoolauna-wrap { margin-top: -10px; }
+  .back-tier-logos.tier-hoolauna { margin-top: 3px; }
+  .back-tier-logos.tier-hoolauna img { height: 0.33in; }
+  .back-tier.tier-community-wrap { margin-top: 10px; }
+  .back-tier-logos.tier-community img { height: 0.20in; }
+
+  /* ── Print Styles ──────────────────────────────── */
+  @media print {
+    body { background: none; }
+    .controls { display: none !important; }
+    .print-area { margin: 0; max-width: none; }
+    .sheet {
+      box-shadow: none;
+      margin: 0;
+      page-break-after: always;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .sheet:last-child { page-break-after: auto; }
+    .badge { border-color: #ddd; }
+    .sheet-label { display: none; }
+  }
+
+  @page {
+    size: letter;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls" id="controls">
+  <h1>Hawaii Island AI Summit — Badge Generator</h1>
+  <p>
+    Load attendees from Luma or enter manually. Format: <strong>FirstName LastName, CheckInURL</strong> (one per line).<br>
+    The check-in URL generates the QR code on the back. If omitted, no QR is shown.
+  </p>
+  <div class="actions" style="margin-bottom: .75rem;">
+    <button class="btn-primary" onclick="loadFromLuma()" id="lumaBtn">Load from Luma</button>
+    <span class="hint" id="lumaStatus"></span>
+  </div>
+  <textarea id="attendeeInput" spellcheck="false">
+Jane Doe, https://lu.ma/check-in/evt-example?pk=g-example1
+John Smith, https://lu.ma/check-in/evt-example?pk=g-example2
+  </textarea>
+  <div class="actions">
+    <button class="btn-primary" onclick="generateBadges()">Generate Badges</button>
+    <button class="btn-print" onclick="window.print()">Print (Duplex)</button>
+    <span class="hint">Print double-sided (flip on long edge). Each front sheet is followed by its back sheet. Set margins to "None".</span>
+  </div>
+</div>
+
+<div class="print-area" id="printArea"></div>
+
+<script>
+  const BADGES_PER_SHEET = 6;
+  const BANNER_SRC = 'images/logos/event_logo_banner.png';
+  const LUMA_FUNCTION_URL = '/.netlify/functions/get-attendees';
+
+  async function loadFromLuma() {
+    const btn = document.getElementById('lumaBtn');
+    const status = document.getElementById('lumaStatus');
+    btn.disabled = true;
+    btn.textContent = 'Loading...';
+    status.textContent = '';
+
+    try {
+      const res = await fetch(LUMA_FUNCTION_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const attendees = data.attendees || [];
+
+      if (attendees.length === 0) {
+        status.textContent = 'No attendees found.';
+        return;
+      }
+
+      // Build lines: "FirstName LastName, checkin-url"
+      const lines = attendees.map(a => {
+        // Split name into first/last
+        let firstName = a.firstName || '';
+        let lastName = a.lastName || '';
+        if (!firstName && a.name) {
+          const parts = a.name.split(/\s+/);
+          firstName = parts[0] || '';
+          lastName = parts.slice(1).join(' ');
+        }
+        const fullName = [firstName, lastName].filter(Boolean).join(' ');
+
+        // Use Luma's provided check-in QR code URL
+        const qrUrl = a.checkInQrCode || '';
+
+        return qrUrl ? `${fullName}, ${qrUrl}` : fullName;
+      });
+
+      document.getElementById('attendeeInput').value = lines.join('\n');
+      status.textContent = `Loaded ${attendees.length} attendees.`;
+      generateBadges();
+    } catch (err) {
+      status.textContent = 'Error loading attendees: ' + err.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Load from Luma';
+    }
+  }
+
+  // Front bottom sponsors (Kealani logo needs inversion on white background)
+  const FRONT_SPONSORS = [
+    { src: 'images/logos/kamaaina_tech_solutions_logo.png', alt: "Kama'aina Tech Solutions" },
+    { src: 'images/logos/Kealani_Solutions_transparent.png', alt: 'Kealani Solutions', invert: true },
+  ];
+
+  // Back sponsors hierarchy — invert: true for white-on-transparent logos
+  const BACK_TIERS = [
+    {
+      label: 'Mana Sponsor',
+      tierClass: 'tier-mana',
+      logos: [
+        { src: 'images/logos/mayu_systems_logo.png', alt: 'Mayu Systems', scale: 1.5 },
+      ]
+    },
+    {
+      label: "Ho'olauna Coffee & Networking",
+      tierClass: 'tier-hoolauna',
+      logos: [
+        { src: 'images/logos/blue_startups_logo.png', alt: 'Blue Startups', invert: true },
+      ]
+    },
+    {
+      label: 'Community Sponsors',
+      tierClass: 'tier-community',
+      rows: [
+        [
+          { src: 'images/logos/HWIT_Black_logo.png', alt: 'Hawaii Women in Tech', scale: 1.3, offsetY: '-20%', marginRight: '4px' },
+          { src: 'images/logos/nimblebrain_logo_color.png', alt: 'Nimble Brain' },
+          { src: 'images/logos/IG_Secondary_logo.png', alt: 'Infra Garden' },
+          { src: 'images/logos/path_logo.png', alt: 'Path', scale: 1.2, invert: true },
+        ],
+        [
+          { src: 'images/logos/netcom_logo.png', alt: 'Netcom', scale: 0.8 },
+          { src: 'images/logos/waiakea_water_logo.png', alt: 'Waiakea Water', invert: true, scale: 0.75 },
+          { src: 'images/logos/ieee_logo.png', alt: 'IEEE Island of Hawaii', scale: 0.75 },
+        ],
+        [
+          { src: 'images/logos/HCAI-Logo-Transparent.png', alt: 'Hawaii Center for AI', scale: 1.44 },
+          { src: 'images/logos/htdc_logo.png', alt: 'HTDC', scale: 0.8 },
+          { src: 'images/logos/bigislandtech_logotype.png', alt: 'Big Island Tech' },
+        ],
+      ]
+    },
+  ];
+
+  function parseName(line) {
+    const parts = line.split(',').map(s => s.trim());
+    const fullName = parts[0] || '';
+    const url = parts[1] || '';
+    const nameParts = fullName.split(/\s+/);
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ');
+    return { firstName, lastName, url };
+  }
+
+  function makeQR(text, size) {
+    if (!text) return null;
+    const qr = qrcode(0, 'M');
+    qr.addData(text);
+    qr.make();
+    const canvas = document.createElement('canvas');
+    const cellSize = Math.ceil(size / qr.getModuleCount());
+    const totalSize = cellSize * qr.getModuleCount();
+    canvas.width = totalSize;
+    canvas.height = totalSize;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, totalSize, totalSize);
+    for (let row = 0; row < qr.getModuleCount(); row++) {
+      for (let col = 0; col < qr.getModuleCount(); col++) {
+        if (qr.isDark(row, col)) {
+          ctx.fillStyle = '#2D3132';
+          ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+    return canvas;
+  }
+
+  function createFrontBadge({ firstName, lastName }) {
+    const badge = document.createElement('div');
+    badge.className = 'badge';
+
+    const inner = document.createElement('div');
+    inner.className = 'badge-front';
+
+    // Banner
+    const banner = document.createElement('img');
+    banner.className = 'badge-banner';
+    banner.src = BANNER_SRC;
+    banner.alt = 'Hawaii Island AI Summit';
+    inner.appendChild(banner);
+
+    // Name
+    const nameBlock = document.createElement('div');
+    nameBlock.className = 'badge-name';
+
+    const first = document.createElement('div');
+    first.className = 'badge-firstname';
+    if (firstName.length > 10) first.classList.add('long-name');
+    first.textContent = firstName;
+    nameBlock.appendChild(first);
+
+    if (lastName) {
+      const last = document.createElement('div');
+      last.className = 'badge-lastname';
+      if (lastName.length > 14) last.classList.add('long-name');
+      last.textContent = lastName;
+      nameBlock.appendChild(last);
+    }
+
+    inner.appendChild(nameBlock);
+
+    // Front sponsors
+    const sponsorStrip = document.createElement('div');
+    sponsorStrip.className = 'badge-front-sponsors';
+    FRONT_SPONSORS.forEach(s => {
+      const img = document.createElement('img');
+      img.src = s.src;
+      img.alt = s.alt;
+      if (s.invert) img.classList.add('invert-logo');
+      sponsorStrip.appendChild(img);
+    });
+    inner.appendChild(sponsorStrip);
+
+    badge.appendChild(inner);
+    return badge;
+  }
+
+  function createBackBadge({ url }) {
+    const badge = document.createElement('div');
+    badge.className = 'badge';
+
+    const inner = document.createElement('div');
+    inner.className = 'badge-back';
+
+    // Top row: QR code left + Mana sponsor right
+    const topRow = document.createElement('div');
+    topRow.className = 'back-top-row';
+
+    if (url) {
+      const qrWrap = document.createElement('div');
+      qrWrap.className = 'back-qr';
+      const canvas = makeQR(url, 150);
+      if (canvas) qrWrap.appendChild(canvas);
+      topRow.appendChild(qrWrap);
+    }
+
+    // Find and render Mana tier in the top row
+    const manaTier = BACK_TIERS.find(t => t.tierClass === 'tier-mana');
+    if (manaTier) {
+      const manaDiv = document.createElement('div');
+      manaDiv.className = 'back-top-sponsor';
+      const label = document.createElement('div');
+      label.className = 'back-tier-label';
+      label.textContent = manaTier.label;
+      manaDiv.appendChild(label);
+      const logos = document.createElement('div');
+      logos.className = 'back-tier-logos ' + manaTier.tierClass;
+      (manaTier.logos || []).forEach(l => {
+        const img = document.createElement('img');
+        img.src = l.src;
+        img.alt = l.alt;
+        if (l.invert) img.classList.add('invert-logo');
+        if (l.scale || l.offsetY) {
+          const parts = [];
+          if (l.scale) parts.push(`scale(${l.scale})`);
+          if (l.offsetY) parts.push(`translateY(${l.offsetY})`);
+          img.style.transform = parts.join(' ');
+        }
+        logos.appendChild(img);
+      });
+      manaDiv.appendChild(logos);
+      topRow.appendChild(manaDiv);
+    }
+
+    inner.appendChild(topRow);
+
+    // Remaining sponsors (skip Mana since it's in the top row)
+    const sponsorsBlock = document.createElement('div');
+    sponsorsBlock.className = 'back-sponsors';
+
+    BACK_TIERS.filter(t => t.tierClass !== 'tier-mana').forEach(tier => {
+      const tierDiv = document.createElement('div');
+      tierDiv.className = 'back-tier'
+        + (tier.tierClass === 'tier-hoolauna' ? ' tier-hoolauna-wrap' : '')
+        + (tier.tierClass === 'tier-community' ? ' tier-community-wrap' : '');
+
+      const label = document.createElement('div');
+      label.className = 'back-tier-label';
+      label.textContent = tier.label;
+      tierDiv.appendChild(label);
+
+      const logoRows = tier.rows || [tier.logos];
+      logoRows.forEach((row, rowIdx) => {
+        const logos = document.createElement('div');
+        logos.className = 'back-tier-logos ' + tier.tierClass;
+        if (tier.tierClass === 'tier-community') {
+          if (rowIdx === 0) logos.style.marginBottom = '6px';
+          else if (rowIdx === 1) logos.style.marginBottom = '8px';
+        }
+        row.forEach(l => {
+          const img = document.createElement('img');
+          img.src = l.src;
+          img.alt = l.alt;
+          if (l.invert) img.classList.add('invert-logo');
+          if (l.blueBg) img.classList.add('blue-bg-logo');
+          if (l.scale || l.offsetY) {
+            const parts = [];
+            if (l.scale) parts.push(`scale(${l.scale})`);
+            if (l.offsetY) parts.push(`translateY(${l.offsetY})`);
+            img.style.transform = parts.join(' ');
+          }
+          if (l.marginRight) img.style.marginRight = l.marginRight;
+          logos.appendChild(img);
+        });
+        tierDiv.appendChild(logos);
+      });
+      sponsorsBlock.appendChild(tierDiv);
+    });
+
+    inner.appendChild(sponsorsBlock);
+
+
+    badge.appendChild(inner);
+    return badge;
+  }
+
+  function createEmptyBadge() {
+    const badge = document.createElement('div');
+    badge.className = 'badge';
+    badge.innerHTML = '<div class="badge-front"></div>';
+    return badge;
+  }
+
+  function generateBadges() {
+    const input = document.getElementById('attendeeInput').value.trim();
+    const lines = input.split('\n').map(l => l.trim()).filter(Boolean);
+    const attendees = lines.map(parseName);
+
+    const printArea = document.getElementById('printArea');
+    printArea.innerHTML = '';
+
+    // Generate paired front/back sheets
+    for (let i = 0; i < attendees.length; i += BADGES_PER_SHEET) {
+      const chunk = attendees.slice(i, i + BADGES_PER_SHEET);
+
+      // ── FRONT sheet ──
+      const frontSheet = document.createElement('div');
+      frontSheet.className = 'sheet';
+      const frontLabel = document.createElement('div');
+      frontLabel.className = 'sheet-label';
+      frontLabel.textContent = 'Front — Sheet ' + (Math.floor(i / BADGES_PER_SHEET) + 1);
+      frontSheet.appendChild(frontLabel);
+
+      chunk.forEach(a => frontSheet.appendChild(createFrontBadge(a)));
+      for (let j = chunk.length; j < BADGES_PER_SHEET; j++) {
+        frontSheet.appendChild(createEmptyBadge());
+      }
+      printArea.appendChild(frontSheet);
+
+      // ── BACK sheet (columns reversed for long-edge duplex) ──
+      const backSheet = document.createElement('div');
+      backSheet.className = 'sheet';
+      const backLabel = document.createElement('div');
+      backLabel.className = 'sheet-label';
+      backLabel.textContent = 'Back — Sheet ' + (Math.floor(i / BADGES_PER_SHEET) + 1);
+      backSheet.appendChild(backLabel);
+
+      // Pad chunk to 6
+      const padded = [...chunk];
+      while (padded.length < BADGES_PER_SHEET) {
+        padded.push({ firstName: '', lastName: '', url: '' });
+      }
+
+      // Reverse columns: swap pairs [0,1] → [1,0], [2,3] → [3,2], [4,5] → [5,4]
+      const reordered = [];
+      for (let r = 0; r < 3; r++) {
+        reordered.push(padded[r * 2 + 1]);
+        reordered.push(padded[r * 2]);
+      }
+
+      reordered.forEach(a => {
+        if (a.firstName || a.url) {
+          backSheet.appendChild(createBackBadge(a));
+        } else {
+          const empty = document.createElement('div');
+          empty.className = 'badge';
+          empty.innerHTML = '<div class="badge-back"></div>';
+          backSheet.appendChild(empty);
+        }
+      });
+
+      printArea.appendChild(backSheet);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', generateBadges);
+</script>
+
+</body>
+</html>

@@ -61,7 +61,10 @@ exports.handler = async (event) => {
 
         allGuests.push({
           name: g.name || g.user_name || [g.user_first_name, g.user_last_name].filter(Boolean).join(' ') || '',
+          firstName: g.user_first_name || '',
+          lastName: g.user_last_name || '',
           email: (g.email || g.user_email || '').toLowerCase(),
+          checkInQrCode: g.check_in_qr_code || '',
           lumaTrack: lumaTrack,
           registrationAnswers: Object.keys(registrationAnswers).length > 0 ? registrationAnswers : null,
         });
