@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 2850px;
+    height: 1500px;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    background: #006877;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0, 136, 154, 0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 40% at 15% 85%, rgba(255, 127, 80, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 40% at 85% 15%, rgba(255, 127, 80, 0.06) 0%, transparent 60%);
+    z-index: 0;
+  }
+
+  .accent-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 112px;
+    background: linear-gradient(90deg, #006877 0%, #00a0b0 25%, #FF7F50 50%, #00a0b0 75%, #006877 100%);
+    z-index: 2;
+  }
+
+  .accent-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 112px;
+    background: linear-gradient(90deg, #006877 0%, #00a0b0 25%, #FF7F50 50%, #00a0b0 75%, #006877 100%);
+    z-index: 2;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 75px 100px;
+    gap: 50px;
+  }
+
+  .tier-label {
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    color: rgba(77, 216, 232, 0.6);
+  }
+
+  .logos-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+  }
+
+  .logo-row img {
+    height: 180px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  /* Individual sizing overrides */
+  .logo-row img.htdc { height: 130px; }
+  .logo-row img.hcai { height: 220px; }
+  .logo-row img.hwit { height: 230px; }
+  .logo-row img.nimblebrain { height: 170px; }
+  .logo-row img.netcom { height: 144px; }
+  .logo-row img.ieee { height: 140px; }
+  .logo-row img.waiakea { height: 140px; }
+  .logo-row img.path { height: 195px; }
+
+  /* Event logo — small, subtle, bottom-right corner */
+  .event-logo {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    width: 300px;
+    height: auto;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+  <div class="accent-top"></div>
+  <div class="accent-bottom"></div>
+  <div class="content">
+    <div class="tier-label">Community Sponsors</div>
+    <div class="logos-grid">
+      <div class="logo-row">
+        <img class="hwit" src="../images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
+        <img class="nimblebrain" src="../images/logos/nimblebrain_logo_color.png" alt="NimbleBrain">
+        <img src="../images/logos/IG_Secondary_logo.png" alt="Infra Garden">
+        <img class="path" src="../images/logos/path_logo.png" alt="Path" style="filter: brightness(0) invert(1) brightness(2);">
+      </div>
+      <div class="logo-row">
+        <img class="netcom" src="../images/logos/netcom_logo.png" alt="Netcom">
+        <img class="waiakea" src="../images/logos/waiakea_water_logo.png" alt="Waiakea Water">
+        <img class="ieee" src="../images/logos/ieee_logo.png" alt="IEEE Island of Hawaii">
+      </div>
+      <div class="logo-row">
+        <img class="htdc" src="../images/logos/htdc_logo.png" alt="HTDC">
+        <img class="hcai" src="../images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
+        <img src="../images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
+      </div>
+    </div>
+  </div>
+  <img class="event-logo" src="../images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+</body>
+</html>

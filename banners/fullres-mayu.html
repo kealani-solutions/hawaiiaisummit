@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* 4x2 ft landscape + 2" bleed = 52x28 inches = 7800x4200 px at 150 DPI */
+  body {
+    width: 7800px;
+    height: 4200px;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    background: #006877;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 80% at 50% 45%, rgba(0, 136, 154, 0.5) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 80% 20%, rgba(255, 127, 80, 0.08) 0%, transparent 60%);
+    z-index: 0;
+  }
+
+  .accent-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 450px;
+    background: linear-gradient(90deg, #006877 0%, #00a0b0 25%, #FF7F50 50%, #00a0b0 75%, #006877 100%);
+    z-index: 2;
+  }
+
+  .accent-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 450px;
+    background: linear-gradient(90deg, #006877 0%, #00a0b0 25%, #FF7F50 50%, #00a0b0 75%, #006877 100%);
+    z-index: 2;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 200px;
+  }
+
+  .tier-label {
+    font-size: 112px;
+    font-weight: 300;
+    letter-spacing: 40px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 120px;
+  }
+
+  .sponsor-logo {
+    width: 2400px;
+    height: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .event-logo {
+    position: absolute;
+    bottom: 500px;
+    right: 450px;
+    width: 1000px;
+    height: auto;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+  <div class="accent-top"></div>
+  <div class="accent-bottom"></div>
+  <div class="content">
+    <div class="tier-label">Mana Sponsor</div>
+    <img class="sponsor-logo" src="../images/logos/mayu-logo.svg" alt="Mayu Systems">
+  </div>
+  <img class="event-logo" src="../images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+</body>
+</html>
