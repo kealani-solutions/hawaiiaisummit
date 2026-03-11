@@ -285,6 +285,23 @@
       flex-wrap: wrap;
     }
 
+    .happening-now {
+      font-family: var(--font-display);
+      font-size: 7rem;
+      font-weight: 800;
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 20px rgba(255, 127, 80, 0.5), 0 0 40px rgba(255, 127, 80, 0.25);
+      animation: happeningPulse 2s ease-in-out infinite;
+      padding: 20px 40px;
+    }
+
+    @keyframes happeningPulse {
+      0%, 100% { opacity: 1; text-shadow: 0 0 20px rgba(255, 127, 80, 0.5), 0 0 40px rgba(255, 127, 80, 0.25); }
+      50% { opacity: 0.85; text-shadow: 0 0 30px rgba(255, 127, 80, 0.7), 0 0 60px rgba(255, 127, 80, 0.4); }
+    }
+
     .countdown-item {
       background: rgba(0, 212, 232, 0.15);
       backdrop-filter: blur(10px);
@@ -2475,10 +2492,21 @@
   <script>
     // Countdown Timer
     const summitDate = new Date('March 12, 2026 10:30:00').getTime();
+    const testMode = new URLSearchParams(window.location.search).get('test') === 'happeningnow';
+
+    function showHappeningNow() {
+      const countdownEl = document.querySelector('.countdown');
+      countdownEl.innerHTML = '<div class="happening-now">Happening Now</div>';
+      document.querySelector('.hero-cta').style.display = 'none';
+    }
 
     function updateCountdown() {
+      if (testMode) { showHappeningNow(); return; }
+
       const now = new Date().getTime();
       const distance = summitDate - now;
+
+      if (distance <= 0) { showHappeningNow(); return; }
 
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
