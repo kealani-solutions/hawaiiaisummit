@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hawaii Island AI Summit — Sponsors</title>
+<title>Hawaii Island AI Summit — Event Display</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Bebas+Neue&family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Bebas+Neue&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -14,18 +14,20 @@
     height: 100vh;
     overflow: hidden;
     font-family: 'Inter', system-ui, sans-serif;
+    background: #0A0A0A;
   }
 
-  body {
+  /* ── Shared animated background ── */
+  .bg-layer {
+    position: fixed;
+    inset: 0;
     background: linear-gradient(135deg, #0A0A0A 0%, #0D1B1E 30%, #006877 70%, #FF7F50 100%);
     background-size: 400% 400%;
     animation: bgShift 14s ease infinite;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    z-index: 0;
   }
 
-  body::before {
+  .bg-layer::before {
     content: '';
     position: fixed;
     inset: 0;
@@ -34,7 +36,6 @@
       radial-gradient(circle at 85% 15%, rgba(255, 127, 80, 0.25) 0%, transparent 50%),
       radial-gradient(circle at 50% 50%, rgba(255, 217, 61, 0.08) 0%, transparent 60%);
     pointer-events: none;
-    z-index: 0;
   }
 
   @keyframes bgShift {
@@ -43,8 +44,74 @@
     100% { background-position: 0% 50%; }
   }
 
-  /* ── Header: pinned top, compact ── */
-  .header {
+  /* ── Screen system ── */
+  .screen {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    pointer-events: none;
+  }
+
+  .screen.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* ── Accent bars (top & bottom) ── */
+  .accent-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00D4E8, #FF7F50, #FFD93D, #00D4E8);
+    background-size: 300% 100%;
+    animation: accentGlow 4s linear infinite;
+    z-index: 10;
+  }
+
+  .accent-bar.top { top: 0; }
+  .accent-bar.bottom { bottom: 0; }
+
+  @keyframes accentGlow {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── Key indicator ── */
+  .key-indicator {
+    position: fixed;
+    bottom: 16px;
+    right: 20px;
+    z-index: 20;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+  }
+
+  /* ── Event logo watermark ── */
+  .event-watermark {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 8;
+    height: 50px;
+    opacity: 0.3;
+    filter: brightness(0) invert(1);
+  }
+
+  /* ════════════════════════════════════════════════
+     SCREEN 1: SPONSOR SCROLL
+     ════════════════════════════════════════════════ */
+
+  .sponsor-header {
     position: relative;
     z-index: 2;
     text-align: center;
@@ -52,7 +119,7 @@
     flex-shrink: 0;
   }
 
-  .header-label {
+  .sponsor-header-label {
     color: rgba(255, 255, 255, 0.55);
     font-size: clamp(0.9rem, 1.8vw, 1.2rem);
     font-weight: 500;
@@ -61,7 +128,7 @@
     margin-bottom: 0.3vh;
   }
 
-  .header-title {
+  .sponsor-header-title {
     color: #FFFFFF;
     font-family: 'Bebas Neue', 'Oswald', sans-serif;
     font-size: clamp(2.5rem, 6vw, 5rem);
@@ -71,8 +138,7 @@
     text-transform: uppercase;
   }
 
-  /* Thin animated accent below header */
-  .header-accent {
+  .sponsor-header-accent {
     margin-top: 1.5vh;
     height: 3px;
     background: linear-gradient(90deg, #00D4E8, #FF7F50, #FFD93D, #00D4E8);
@@ -80,12 +146,6 @@
     animation: accentGlow 4s linear infinite;
   }
 
-  @keyframes accentGlow {
-    0%   { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
-  }
-
-  /* ── Scroll area: fills remaining 80%+ of viewport ── */
   .scroll-area {
     position: relative;
     z-index: 2;
@@ -115,7 +175,6 @@
     100% { transform: translateX(-50%); }
   }
 
-  /* ── Sponsor items ── */
   .sponsor {
     display: flex;
     flex-direction: column;
@@ -131,10 +190,6 @@
     opacity: 0.9;
   }
 
-  /*
-    Logo heights use vh so they scale to fill the screen.
-    80% of viewport is the scroll area → logos target ~40-60% of that.
-  */
   .sponsor.presented img  { height: clamp(100px, 35vh, 320px); max-width: 45vw; }
   .sponsor.ohana img      { height: clamp(90px, 32vh, 300px); max-width: 42vw; }
   .sponsor.mana img       { height: clamp(80px, 28vh, 260px); max-width: 40vw; }
@@ -156,7 +211,6 @@
   .tier-hoolauna   { color: #FF9A70; }
   .tier-community  { color: #4dd8e8; }
 
-  /* ── Separator between sponsors ── */
   .sep {
     width: 2px;
     height: 6vh;
@@ -165,182 +219,961 @@
     flex-shrink: 0;
   }
 
-  /* ── Bottom accent ── */
-  .bottom-accent {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #00D4E8, #FF7F50, #FFD93D, #00D4E8);
-    background-size: 300% 100%;
-    animation: accentGlow 4s linear infinite;
-    z-index: 5;
+  /* ════════════════════════════════════════════════
+     SPEAKER SCREEN TEMPLATE
+     ════════════════════════════════════════════════ */
+
+  .speaker-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 4vh 6vw;
+    position: relative;
+    z-index: 2;
   }
+
+  .speaker-photo-ring {
+    width: clamp(200px, 30vh, 340px);
+    height: clamp(200px, 30vh, 340px);
+    border-radius: 50%;
+    padding: 5px;
+    background: conic-gradient(from 0deg, #00D4E8, #FF7F50, #FFD93D, #006877, #00D4E8);
+    animation: ringRotate 8s linear infinite;
+    margin-bottom: 3vh;
+    flex-shrink: 0;
+  }
+
+  .speaker-photo-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @keyframes ringRotate {
+    0%   { background: conic-gradient(from 0deg, #00D4E8, #FF7F50, #FFD93D, #006877, #00D4E8); }
+    25%  { background: conic-gradient(from 90deg, #00D4E8, #FF7F50, #FFD93D, #006877, #00D4E8); }
+    50%  { background: conic-gradient(from 180deg, #00D4E8, #FF7F50, #FFD93D, #006877, #00D4E8); }
+    75%  { background: conic-gradient(from 270deg, #00D4E8, #FF7F50, #FFD93D, #006877, #00D4E8); }
+    100% { background: conic-gradient(from 360deg, #00D4E8, #FF7F50, #FFD93D, #006877, #00D4E8); }
+  }
+
+  .speaker-track-badge {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1.3rem);
+    font-weight: 400;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 2.5vh;
+  }
+
+  .speaker-track-badge-lg {
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    margin-bottom: 4vh;
+  }
+
+  .badge-keynote   { color: #FFD93D; }
+  .badge-leaders   { color: #00D4E8; }
+  .badge-builders  { color: #FF7F50; }
+  .badge-panel     { color: #FFD93D; }
+  .badge-special   { color: #FFD93D; }
+
+  .speaker-name {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 400;
+    color: #FFFFFF;
+    letter-spacing: 3px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 0.5vh;
+  }
+
+  .speaker-role {
+    font-size: clamp(1rem, 2.2vw, 1.6rem);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2vh;
+  }
+
+  .speaker-session-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.2rem, 2.8vw, 2rem);
+    font-weight: 700;
+    color: #FF7F50;
+    max-width: 70vw;
+    line-height: 1.3;
+    animation: subtleFloat 4s ease-in-out infinite;
+  }
+
+  .speaker-session-title.keynote-title {
+    color: #FFD93D;
+  }
+
+  @keyframes subtleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .speaker-time {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 2vh;
+  }
+
+  /* ════════════════════════════════════════════════
+     BREAK SCREENS (Coffee, Lunch, Pau Hana)
+     ════════════════════════════════════════════════ */
+
+  .break-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 4vh 6vw;
+    position: relative;
+    z-index: 2;
+  }
+
+  .break-title {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 400;
+    color: #FFFFFF;
+    letter-spacing: 4px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 2vh;
+  }
+
+  .break-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 4vh;
+    letter-spacing: 2px;
+  }
+
+  .break-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(30px, 6vw, 80px);
+    animation: subtleFloat 5s ease-in-out infinite;
+  }
+
+  .break-logos img {
+    height: clamp(60px, 15vh, 160px);
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+  }
+
+  .break-icon {
+    font-size: clamp(4rem, 10vh, 8rem);
+    margin-bottom: 2vh;
+    animation: subtleFloat 3s ease-in-out infinite;
+  }
+
+  /* ════════════════════════════════════════════════
+     SPLIT SCREEN (Dual Sessions)
+     ════════════════════════════════════════════════ */
+
+  .split-screen {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  .split-half {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4vh 3vw;
+    position: relative;
+  }
+
+  .split-half::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    right: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
+  }
+
+  .split-half:last-child::after { display: none; }
+
+  .split-half .speaker-photo-ring {
+    width: clamp(140px, 20vh, 220px);
+    height: clamp(140px, 20vh, 220px);
+    margin-bottom: 2vh;
+  }
+
+  .split-half .speaker-name {
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 0.5vh;
+  }
+
+  .split-half .speaker-role {
+    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+    margin-bottom: 1.5vh;
+  }
+
+  .split-half .speaker-session-title {
+    font-size: clamp(0.9rem, 2vw, 1.4rem);
+    max-width: 90%;
+  }
+
+  .split-half .speaker-track-badge {
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    margin-bottom: 3vh;
+  }
+
+  .split-half .speaker-time {
+    font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+    margin-top: 1.5vh;
+  }
+
+  .split-label {
+    position: absolute;
+    top: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    z-index: 3;
+    color: #fff;
+  }
+
+  /* ════════════════════════════════════════════════
+     PANEL SCREEN
+     ════════════════════════════════════════════════ */
+
+  .panel-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    text-align: center;
+    padding: 4vh 4vw 2vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  .panel-header {
+    margin-bottom: 1.5vh;
+  }
+
+  .panel-title {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 400;
+    color: #FFFFFF;
+    letter-spacing: 3px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .panel-topic {
+    font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    color: #FFD93D;
+    margin-top: 1vh;
+    animation: subtleFloat 4s ease-in-out infinite;
+  }
+
+  .panel-host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.5vh;
+  }
+
+  .panel-host .speaker-photo-ring {
+    width: clamp(120px, 16vh, 180px);
+    height: clamp(120px, 16vh, 180px);
+    margin-bottom: 1vh;
+  }
+
+  .panel-host-label {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.5vh;
+  }
+
+  .panel-host-name {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .panel-host-role {
+    font-size: clamp(0.7rem, 1.3vw, 1rem);
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.3vh;
+  }
+
+  .panel-divider {
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+    margin-bottom: 2.5vh;
+  }
+
+  .panel-members {
+    display: flex;
+    justify-content: center;
+    gap: clamp(20px, 5vw, 60px);
+    flex-wrap: wrap;
+  }
+
+  .panel-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .panel-member-photo {
+    width: clamp(90px, 13vh, 140px);
+    height: clamp(90px, 13vh, 140px);
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(from 0deg, #00D4E8, #FF7F50, #FFD93D, #006877, #00D4E8);
+    animation: ringRotate 8s linear infinite;
+    margin-bottom: 1vh;
+  }
+
+  .panel-member-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .panel-member-name {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+
+  .panel-member-role {
+    font-size: clamp(0.6rem, 1vw, 0.8rem);
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.3vh;
+    max-width: 160px;
+  }
+
+  /* ════════════════════════════════════════════════
+     MAYOR SCREEN (special)
+     ════════════════════════════════════════════════ */
+
+  .mayor-label {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #FFD93D;
+    margin-bottom: 4vh;
+  }
+
+  .mayor-name {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 400;
+    color: #FFFFFF;
+    letter-spacing: 4px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 0.5vh;
+  }
+
+  .mayor-office {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 2px;
+  }
+
+  .mayor-photo-ring {
+    width: clamp(240px, 35vh, 400px);
+    height: clamp(240px, 35vh, 400px);
+    border-radius: 50%;
+    padding: 6px;
+    background: conic-gradient(from 0deg, #FFD93D, #FF7F50, #006877, #00D4E8, #FFD93D);
+    animation: ringRotate 10s linear infinite;
+    margin-bottom: 3vh;
+    flex-shrink: 0;
+  }
+
+  .mayor-photo-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ════════════════════════════════════════════════
+     DECORATIVE ELEMENTS
+     ════════════════════════════════════════════════ */
+
+  /* Floating particles for certain screens */
+  .particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat linear infinite;
+  }
+
+  @keyframes particleFloat {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+
+  /* Subtle vignette */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ════════════════════════════════════════════════
+     PRESENTED BY (for break screens)
+     ════════════════════════════════════════════════ */
+
+  .presented-by {
+    font-family: 'Bebas Neue', 'Oswald', sans-serif;
+    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1vh;
+  }
+
 </style>
 </head>
 <body>
 
-  <!-- Header: compact, top-pinned -->
-  <div class="header">
-    <div class="header-label">Mahalo to Our Sponsors &amp; Partners</div>
-    <div class="header-title">Hawaii Island AI Summit</div>
-    <div class="header-accent"></div>
-  </div>
+  <!-- Shared animated background -->
+  <div class="bg-layer"></div>
 
-  <!-- Logos: fill remaining viewport -->
-  <div class="scroll-area">
-    <div class="scroll-track">
-      <!-- First set -->
-      <div class="scroll-group">
-        <div class="sponsor presented">
-          <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
-          <span class="sponsor-tier-badge tier-presented">Presented by</span>
+  <!-- Accent bars -->
+  <div class="accent-bar top"></div>
+  <div class="accent-bar bottom"></div>
+
+  <!-- Event logo watermark -->
+  <img src="images/logos/event_logo.png" alt="" class="event-watermark">
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 1: SPONSOR SCROLL
+       ═══════════════════════════════════════════════ -->
+  <div class="screen active" id="screen-1">
+    <div class="sponsor-header">
+      <div class="sponsor-header-label">Mahalo to Our Sponsors &amp; Partners</div>
+      <div class="sponsor-header-title">Hawaii Island AI Summit</div>
+      <div class="sponsor-header-accent"></div>
+    </div>
+    <div class="scroll-area">
+      <div class="scroll-track">
+        <div class="scroll-group">
+          <div class="sponsor presented">
+            <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
+            <span class="sponsor-tier-badge tier-presented">Presented by</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor ohana">
+            <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kamaʻaina Tech Solutions">
+            <span class="sponsor-tier-badge tier-ohana">'Ohana Sponsor</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor mana">
+            <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems">
+            <span class="sponsor-tier-badge tier-mana">Mana Sponsor</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor hoolauna">
+            <img src="images/logos/blue_startups_logo_hires.png" alt="Blue Startups">
+            <span class="sponsor-tier-badge tier-hoolauna">Ho'olauna Coffee</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/netcom_logo.png" alt="Netcom">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/path_logo.png" alt="Path">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/htdc_logo.png" alt="HTDC">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/waiakea_water_logo.png" alt="Waiakea Hawaiian Volcanic Water">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/ieee_logo.png" alt="IEEE Island of Hawaii">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
         </div>
-        <div class="sep"></div>
-        <div class="sponsor ohana">
-          <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kamaʻaina Tech Solutions">
-          <span class="sponsor-tier-badge tier-ohana">'Ohana Sponsor</span>
+        <!-- Duplicate for seamless loop -->
+        <div class="scroll-group">
+          <div class="sponsor presented">
+            <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
+            <span class="sponsor-tier-badge tier-presented">Presented by</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor ohana">
+            <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kamaʻaina Tech Solutions">
+            <span class="sponsor-tier-badge tier-ohana">'Ohana Sponsor</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor mana">
+            <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems">
+            <span class="sponsor-tier-badge tier-mana">Mana Sponsor</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor hoolauna">
+            <img src="images/logos/blue_startups_logo_hires.png" alt="Blue Startups">
+            <span class="sponsor-tier-badge tier-hoolauna">Ho'olauna Coffee</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/netcom_logo.png" alt="Netcom">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/path_logo.png" alt="Path">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/htdc_logo.png" alt="HTDC">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/waiakea_water_logo.png" alt="Waiakea Hawaiian Volcanic Water">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
+          <div class="sponsor community">
+            <img src="images/logos/ieee_logo.png" alt="IEEE Island of Hawaii">
+            <span class="sponsor-tier-badge tier-community">Community</span>
+          </div>
+          <div class="sep"></div>
         </div>
-        <div class="sep"></div>
-        <div class="sponsor mana">
-          <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems">
-          <span class="sponsor-tier-badge tier-mana">Mana Sponsor</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor hoolauna">
-          <img src="images/logos/blue_startups_logo_hires.png" alt="Blue Startups">
-          <span class="sponsor-tier-badge tier-hoolauna">Ho'olauna Coffee</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/netcom_logo.png" alt="Netcom">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/path_logo.png" alt="Path">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/htdc_logo.png" alt="HTDC">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/waiakea_water_logo.png" alt="Waiakea Hawaiian Volcanic Water">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/ieee_logo.png" alt="IEEE Island of Hawaii">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-      </div>
-      <!-- Duplicate for seamless loop -->
-      <div class="scroll-group">
-        <div class="sponsor presented">
-          <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
-          <span class="sponsor-tier-badge tier-presented">Presented by</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor ohana">
-          <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kamaʻaina Tech Solutions">
-          <span class="sponsor-tier-badge tier-ohana">'Ohana Sponsor</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor mana">
-          <img src="images/logos/mayu_systems_logo.png" alt="Mayu Systems">
-          <span class="sponsor-tier-badge tier-mana">Mana Sponsor</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor hoolauna">
-          <img src="images/logos/blue_startups_logo_hires.png" alt="Blue Startups">
-          <span class="sponsor-tier-badge tier-hoolauna">Ho'olauna Coffee</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/nimblebrain_logo_white.png" alt="NimbleBrain">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/netcom_logo.png" alt="Netcom">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/path_logo.png" alt="Path">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/htdc_logo.png" alt="HTDC">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/waiakea_water_logo.png" alt="Waiakea Hawaiian Volcanic Water">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
-        <div class="sponsor community">
-          <img src="images/logos/ieee_logo.png" alt="IEEE Island of Hawaii">
-          <span class="sponsor-tier-badge tier-community">Community</span>
-        </div>
-        <div class="sep"></div>
       </div>
     </div>
   </div>
 
-  <div class="bottom-accent"></div>
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 2: COFFEE BREAK
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-2">
+    <div class="break-screen">
+      <div class="particles" id="coffee-particles"></div>
+      <div class="vignette"></div>
+      <div class="break-icon">&#9749;</div>
+      <div class="break-title">Ho'olauna Coffee</div>
+      <div class="break-subtitle">Networking &amp; Refreshments</div>
+      <div class="presented-by">Sponsored by</div>
+      <div class="break-logos">
+        <img src="images/logos/blue_startups_logo_hires.png" alt="Blue Startups">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 3: MICHELLE DUMAIS
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-3">
+    <div class="speaker-screen">
+      <div class="vignette"></div>
+      <div class="speaker-track-badge speaker-track-badge-lg badge-special">Welcome &amp; Opening Remarks</div>
+      <div class="speaker-photo-ring">
+        <img src="images/speakers/michelle_dumais.jpeg" alt="Michelle Dumais" style="object-position: center 20%; transform: scale(1.2);">
+      </div>
+      <div class="speaker-name">Michelle Dumais</div>
+      <div class="speaker-role" style="font-size: clamp(1.2rem, 2.8vw, 2.4rem); color: #FF7F50; font-weight: 800;">Summit Organizer</div>
+      <div class="speaker-time">Hawaii Island AI Summit</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 4: BENSON MEDINA — KEYNOTE
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-4">
+    <div class="speaker-screen">
+      <div class="vignette"></div>
+      <div class="speaker-track-badge speaker-track-badge-lg badge-keynote">Keynote Presentation</div>
+      <div class="speaker-photo-ring">
+        <img src="images/speakers/benson_medina.jpeg" alt="Benson Medina">
+      </div>
+      <div class="speaker-name">Benson Medina</div>
+      <div class="speaker-role">Director of Research &amp; Development &mdash; Hawai&#699;i County</div>
+      <div class="speaker-session-title keynote-title">Opening Keynote</div>
+      <div class="speaker-time">11:00 AM</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 5: BINIL CHACKO — KEYNOTE
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-5">
+    <div class="speaker-screen">
+      <div class="vignette"></div>
+      <div class="speaker-track-badge speaker-track-badge-lg badge-keynote">Keynote Presentation</div>
+      <div class="speaker-photo-ring">
+        <img src="images/speakers/binil_chacko.jpeg" alt="Binil Chacko">
+      </div>
+      <div class="speaker-name">Binil Chacko</div>
+      <div class="speaker-role">Founder &mdash; Empower Potential &nbsp;|&nbsp; Business Advisor &mdash; Hawai&#699;i SBDC</div>
+      <div class="speaker-session-title keynote-title">If AI Can Replace You, Who Were You to Begin With?</div>
+      <div class="speaker-time">11:30 AM</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 6: MAYOR KIMO ALAMEDA
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-6">
+    <div class="speaker-screen">
+      <div class="vignette"></div>
+      <div class="mayor-label speaker-track-badge-lg">Special Address</div>
+      <div class="mayor-photo-ring">
+        <img src="images/speakers/mayor_kimo_alameda.jpg" alt="Mayor Kimo Alameda">
+      </div>
+      <div class="mayor-name">Mayor Kimo Alameda</div>
+      <div class="mayor-office">County of Hawai&#699;i</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 7: LUNCH
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-7">
+    <div class="break-screen">
+      <div class="particles" id="lunch-particles"></div>
+      <div class="vignette"></div>
+      <div class="break-icon">&#127860;</div>
+      <div class="break-title">Lunch</div>
+      <div class="break-subtitle">Local Kine Food &amp; Networking</div>
+      <div class="presented-by">Sponsored by</div>
+      <div class="break-logos">
+        <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kamaʻaina Tech Solutions">
+        <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 8: SPLIT — Michelle (Leaders) + Mathew (Builders)
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-8">
+    <div class="split-screen">
+      <div class="vignette"></div>
+      <div class="split-label">1:00 PM &mdash; Workshop Sessions</div>
+      <!-- Leaders Track -->
+      <div class="split-half">
+        <div class="speaker-track-badge badge-leaders">Leaders Track</div>
+        <div class="speaker-photo-ring">
+          <img src="images/speakers/michelle_dumais.jpeg" alt="Michelle Dumais" style="object-position: center 20%; transform: scale(1.2);">
+        </div>
+        <div class="speaker-name">Michelle Dumais</div>
+        <div class="speaker-role">Principal &mdash; Kealani Solutions</div>
+        <div class="speaker-session-title">Before You Automate: Making AI Work in Your Business</div>
+      </div>
+      <!-- Builders Track -->
+      <div class="split-half">
+        <div class="speaker-track-badge badge-builders">Builders Track</div>
+        <div class="speaker-photo-ring">
+          <img src="images/speakers/mathew_goldsborough.png" alt="Mathew Goldsborough">
+        </div>
+        <div class="speaker-name">Mathew Goldsborough</div>
+        <div class="speaker-role">Founder &amp; CEO &mdash; NimbleBrain</div>
+        <div class="speaker-session-title" style="color: #FF7F50;">Business as Code: Build an AI Brain That Actually Knows Your Company</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN 9: SPLIT — Ratna (Leaders) + Evan (Builders)
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-9">
+    <div class="split-screen">
+      <div class="vignette"></div>
+      <div class="split-label">2:00 PM &mdash; Workshop Sessions</div>
+      <!-- Leaders Track -->
+      <div class="split-half">
+        <div class="speaker-track-badge badge-leaders">Leaders Track</div>
+        <div class="speaker-photo-ring">
+          <img src="images/speakers/ratna_amin.jpeg" alt="Ratna Amin">
+        </div>
+        <div class="speaker-name">Ratna Amin</div>
+        <div class="speaker-role">Owner &mdash; Infragarden</div>
+        <div class="speaker-session-title">The Human Architecture of AI Adoption</div>
+      </div>
+      <!-- Builders Track -->
+      <div class="split-half">
+        <div class="speaker-track-badge badge-builders">Builders Track</div>
+        <div class="speaker-photo-ring">
+          <img src="images/speakers/evan_mendenhall.jpeg" alt="Evan Mendenhall">
+        </div>
+        <div class="speaker-name">Evan Mendenhall</div>
+        <div class="speaker-role">Founder &mdash; Professional AI Agents LLC</div>
+        <div class="speaker-session-title" style="color: #FF7F50;">Automating with AI Agents &amp; n8n</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN T: TALK STORY PANEL
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-t">
+    <div class="panel-screen">
+      <div class="vignette"></div>
+      <div class="panel-header">
+        <div class="panel-title">Talk Story Panel</div>
+        <div class="panel-topic">AI &amp; the Future of Work</div>
+      </div>
+      <!-- Host -->
+      <div class="panel-host">
+        <div class="panel-host-label">Moderated by</div>
+        <div class="speaker-photo-ring" style="width: clamp(120px, 16vh, 180px); height: clamp(120px, 16vh, 180px); margin-bottom: 1vh;">
+          <img src="images/speakers/michelle_dumais.jpeg" alt="Michelle Dumais" style="object-position: center 20%; transform: scale(1.2);">
+        </div>
+        <div class="panel-host-name">Michelle Dumais</div>
+        <div class="panel-host-role">Principal &mdash; Kealani Solutions</div>
+      </div>
+      <div class="panel-divider"></div>
+      <!-- Panelists -->
+      <div class="panel-members">
+        <div class="panel-member">
+          <div class="panel-member-photo">
+            <img src="images/speakers/tracie_foglia.jpeg" alt="Tracie Foglia">
+          </div>
+          <div class="panel-member-name">Tracie Foglia</div>
+          <div class="panel-member-role">Hawai&#699;i Employers Council</div>
+        </div>
+        <div class="panel-member">
+          <div class="panel-member-photo">
+            <img src="images/speakers/paul_dumais.jpeg" alt="Paul Dumais">
+          </div>
+          <div class="panel-member-name">Paul Dumais</div>
+          <div class="panel-member-role">Co-Founder &amp; CTO, Abra Hospitality</div>
+        </div>
+        <div class="panel-member">
+          <div class="panel-member-photo">
+            <img src="images/speakers/janice_ikeda.png" alt="Janice Ikeda">
+          </div>
+          <div class="panel-member-name">Janice Ikeda, MA</div>
+          <div class="panel-member-role">Executive Director, Vibrant Hawai&#699;i</div>
+        </div>
+        <div class="panel-member">
+          <div class="panel-member-photo">
+            <img src="images/speakers/nam_vu.jpeg" alt="Nam Vu">
+          </div>
+          <div class="panel-member-name">Nam Vu</div>
+          <div class="panel-member-role">President, Hawai&#699;i Center for AI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCREEN P: PAU HANA
+       ═══════════════════════════════════════════════ -->
+  <div class="screen" id="screen-p">
+    <div class="break-screen">
+      <div class="particles" id="pau-particles"></div>
+      <div class="vignette"></div>
+      <div class="break-icon">&#127866;</div>
+      <div class="break-title">Pau Hana</div>
+      <div class="break-subtitle">Networking &amp; Refreshments &mdash; Until 6:00 PM</div>
+      <div class="presented-by">Presented by</div>
+      <div class="break-logos">
+        <img src="images/logos/Kealani_Solutions_transparent.png" alt="Kealani Solutions">
+      </div>
+    </div>
+  </div>
+
+  <!-- Key indicator -->
+  <div class="key-indicator" id="key-indicator">Screen 1</div>
+
+<script>
+  // ── Screen switching ──
+  const screenMap = {
+    '1': 'screen-1',
+    '2': 'screen-2',
+    '3': 'screen-3',
+    '4': 'screen-4',
+    '5': 'screen-5',
+    '6': 'screen-6',
+    '7': 'screen-7',
+    '8': 'screen-8',
+    '9': 'screen-9',
+    '0': 'screen-t',
+    'p': 'screen-p'
+  };
+
+  const screenLabels = {
+    '1': 'Sponsors',
+    '2': 'Coffee',
+    '3': 'Michelle Dumais',
+    '4': 'Benson Medina',
+    '5': 'Binil Chacko',
+    '6': 'Mayor Alameda',
+    '7': 'Lunch',
+    '8': 'Leaders + Builders',
+    '9': 'Ratna + Evan',
+    '0': 'Talk Story',
+    'p': 'Pau Hana'
+  };
+
+  let currentScreen = '1';
+
+  function switchScreen(key) {
+    key = key.toLowerCase();
+    if (!screenMap[key] || key === currentScreen) return;
+
+    const prev = document.getElementById(screenMap[currentScreen]);
+    const next = document.getElementById(screenMap[key]);
+
+    if (prev) prev.classList.remove('active');
+    if (next) next.classList.add('active');
+
+    currentScreen = key;
+    document.getElementById('key-indicator').textContent = screenLabels[key] + ' [' + key.toUpperCase() + ']';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    const key = e.key.toLowerCase();
+    if (screenMap[key]) {
+      switchScreen(key);
+    }
+  });
+
+  // ── Particle generator for break screens ──
+  function createParticles(containerId, color, count) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      const size = Math.random() * 4 + 2;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.background = color;
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+      particle.style.animationDelay = (Math.random() * 10) + 's';
+      container.appendChild(particle);
+    }
+  }
+
+  createParticles('coffee-particles', 'rgba(255, 217, 61, 0.5)', 20);
+  createParticles('lunch-particles', 'rgba(255, 127, 80, 0.4)', 20);
+  createParticles('pau-particles', 'rgba(0, 212, 232, 0.4)', 20);
+</script>
 
 </body>
 </html>
