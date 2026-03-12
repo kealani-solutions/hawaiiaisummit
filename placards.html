@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Community Sponsor Placards - Hawaii Island AI Summit 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -204,15 +205,87 @@
     padding: 0 40px 16px;
   }
 
-  /* Dark background logo area (for white logos) */
-  .sponsor-logo-area.dark-bg {
-    background: #2D3132;
-    border-radius: 16px;
-    width: 80%;
-    margin: 0 auto;
-    padding: 60px;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  /* QR code section */
+  .sponsor-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 20px;
+  }
+
+  .sponsor-qr canvas {
+    width: 1.4in !important;
+    height: 1.4in !important;
+  }
+
+  .sponsor-qr .qr-url {
+    font-size: 16px;
+    font-weight: 600;
+    color: #006877;
+    letter-spacing: 0.3px;
+  }
+
+  /* All-sponsors placard */
+  .all-sponsors-header {
+    font-size: 28px;
+    font-weight: 800;
+    color: #006877;
+    text-align: center;
+    margin-top: 36px;
+    letter-spacing: 0.5px;
+  }
+
+  .all-sponsors-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+    padding: 20px 40px 16px;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .all-sponsors-tier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .all-sponsors-tier-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  .all-sponsors-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .all-sponsors-row img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .all-sponsors-row img.tall {
+    height: 66px;
+  }
+
+  .all-sponsors-row img.short {
+    height: 36px;
+  }
+
+  .all-sponsors-row img.invert {
+    filter: brightness(0);
   }
 
 
@@ -313,7 +386,7 @@
   <div class="placard">
     <span class="tier-label">Community Sponsor</span>
     <div class="sponsor-logo-area">
-      <img src="images/logos/path_logo.png" alt="Path">
+      <img src="images/logos/path_logo.png" alt="Path" style="max-width: 68%;">
     </div>
     <div class="sponsor-name">Path</div>
     <div class="placard-banner">
@@ -365,7 +438,7 @@
 
   <!-- KTS - Kama'aina Tech Solutions -->
   <div class="placard">
-    <span class="tier-label">Community Sponsor</span>
+    <span class="tier-label" style="color: #FF7F50;">'Ohana Sponsor</span>
     <div class="sponsor-logo-area">
       <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kama'aina Tech Solutions">
     </div>
@@ -377,11 +450,15 @@
 
   <!-- Kealani Solutions -->
   <div class="placard">
-    <span class="tier-label">Community Sponsor</span>
+    <span class="tier-label" style="color: #FF7F50;">Presenting Sponsor</span>
     <div class="sponsor-logo-area">
-      <img src="images/logos/kealani_solutions_black.png" alt="Kealani Solutions">
+      <img src="images/logos/kealani_solutions_black.png" alt="Kealani Solutions" style="max-width: 106%;">
     </div>
-    <div class="sponsor-name">Kealani Solutions</div>
+    <div class="sponsor-name">ClearStart Launch</div>
+    <div class="sponsor-qr">
+      <canvas id="kealani-qr"></canvas>
+      <span class="qr-url">clearstart.kealani.cloud</span>
+    </div>
     <div class="placard-banner">
       <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
     </div>
@@ -389,9 +466,9 @@
 
   <!-- Mayu Systems -->
   <div class="placard">
-    <span class="tier-label">Community Sponsor</span>
+    <span class="tier-label" style="color: #FF7F50;">Mana Sponsor</span>
     <div class="sponsor-logo-area">
-      <img src="images/logos/mayu_systems_logo_v2.png" alt="Mayu Systems">
+      <img src="images/logos/mayu_systems_logo_v2.png" alt="Mayu Systems" style="max-width: 64%;">
     </div>
     <div class="sponsor-name">Mayu Systems</div>
     <div class="placard-banner">
@@ -411,7 +488,94 @@
     </div>
   </div>
 
+  <!-- All Sponsors -->
+  <div class="placard">
+    <div class="all-sponsors-header">Thank You to Our Sponsors</div>
+
+    <div class="all-sponsors-grid">
+
+      <!-- 'Ohana Sponsor -->
+      <div class="all-sponsors-tier">
+        <span class="all-sponsors-tier-label" style="color: #FF7F50;">'Ohana Sponsor</span>
+        <div class="all-sponsors-row">
+          <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kama'aina Tech Solutions" style="height: 102px;">
+        </div>
+      </div>
+
+      <!-- Mana Sponsor -->
+      <div class="all-sponsors-tier">
+        <span class="all-sponsors-tier-label" style="color: #FF7F50;">Mana Sponsor</span>
+        <div class="all-sponsors-row">
+          <img src="images/logos/mayu_systems_logo_v2.png" alt="Mayu Systems" style="height: 82px;">
+        </div>
+      </div>
+
+      <!-- Ho'olauna Coffee & Networking -->
+      <div class="all-sponsors-tier">
+        <span class="all-sponsors-tier-label" style="color: #FF7F50;">Ho'olauna Coffee &amp; Networking</span>
+        <div class="all-sponsors-row">
+          <img src="images/logos/blue_startups_logo_hires.png" alt="Blue Startups" class="invert" style="height: 60px;">
+        </div>
+      </div>
+
+      <!-- Community Sponsors -->
+      <div class="all-sponsors-tier">
+        <span class="all-sponsors-tier-label" style="color: #4dd8e8;">Community Sponsors</span>
+        <div class="all-sponsors-row">
+          <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech" class="tall">
+          <img src="images/logos/nimblebrain_logo_color.png" alt="NimbleBrain">
+          <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
+        </div>
+        <div class="all-sponsors-row">
+          <img src="images/logos/netcom_logo.png" alt="Netcom">
+          <img src="images/logos/path_logo.png" alt="Path" class="tall">
+          <img src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
+        </div>
+        <div class="all-sponsors-row">
+          <img src="images/logos/htdc_logo.png" alt="HTDC" class="short">
+          <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI" class="tall">
+          <img src="images/logos/waiakea_logo_blue.svg" alt="Waiakea" style="height: 29px;">
+          <img src="images/logos/ieee_logo.png" alt="IEEE Island of Hawaii">
+        </div>
+      </div>
+
+      <!-- Presented by -->
+      <div class="all-sponsors-tier">
+        <span class="all-sponsors-tier-label" style="color: #FF7F50;">Presented by</span>
+        <div class="all-sponsors-row">
+          <img src="images/logos/kealani_solutions_black.png" alt="Kealani Solutions" style="height: 102px;">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
 </div>
 
+<script>
+  const qr = qrcode(0, 'M');
+  qr.addData('https://clearstart.kealani.cloud');
+  qr.make();
+  const canvas = document.getElementById('kealani-qr');
+  const cellSize = 8;
+  const modules = qr.getModuleCount();
+  canvas.width = modules * cellSize;
+  canvas.height = modules * cellSize;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#2D3132';
+  for (let r = 0; r < modules; r++) {
+    for (let c = 0; c < modules; c++) {
+      if (qr.isDark(r, c)) {
+        ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+      }
+    }
+  }
+</script>
 </body>
 </html>
