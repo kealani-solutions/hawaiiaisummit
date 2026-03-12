@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Sponsor Placards - Hawaii Island AI Summit 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #e0e0e0;
+    padding: 40px 20px;
+  }
+
+  /* Preview controls */
+  .controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #2D3132;
+    color: #F9FBFB;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .controls h1 {
+    font-size: 16px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .controls button {
+    background: #006877;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .controls button:hover {
+    background: #008899;
+  }
+
+  .placards-container {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* Each placard is 8.5x11 inches */
+  .placard {
+    width: 8.5in;
+    height: 11in;
+    background: white;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  /* Decorative top border - teal gradient */
+  .placard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: linear-gradient(90deg, #006877, #4dd8e8, #006877);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Community Sponsor label */
+  .tier-label {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4dd8e8;
+    margin-top: 36px;
+  }
+
+  /* Teal banner footer with summit logo */
+  .placard-banner {
+    width: calc(100% + 2in);
+    margin-left: -1in;
+    margin-right: -1in;
+    height: 1.2in;
+    background: #006877;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .placard-banner img {
+    height: 0.85in;
+    object-fit: contain;
+  }
+
+  /* Main sponsor logo area */
+  .sponsor-logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+    padding: 40px 60px 40px;
+  }
+
+  .sponsor-logo-area img {
+    max-width: 85%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Dual sponsor layout */
+  .sponsor-logo-area.dual {
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 80px;
+  }
+
+  .dual-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+  }
+
+  .dual-logo img {
+    max-width: 70%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .dual-separator {
+    width: 60%;
+    height: 1px;
+    background: #d0d5d6;
+    flex-shrink: 0;
+  }
+
+  /* Sponsor name below logo */
+  .sponsor-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #2D3132;
+    text-align: center;
+    padding: 0 40px 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Photo + logo layout (e.g. Big Island Tech) */
+  .sponsor-photo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+    padding: 20px 60px 10px;
+    gap: 16px;
+  }
+
+  .sponsor-photo-area .photo {
+    max-width: 90%;
+    max-height: 60%;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .sponsor-photo-area .logo {
+    max-width: 50%;
+    max-height: 25%;
+    object-fit: contain;
+  }
+
+  .sponsor-name.small {
+    font-size: 16px;
+    padding: 0 40px 16px;
+  }
+
+  /* Dark background logo area (for white logos) */
+  .sponsor-logo-area.dark-bg {
+    background: #2D3132;
+    border-radius: 16px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 60px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+
+  /* Print styles */
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+      margin: 0;
+    }
+
+    .controls {
+      display: none !important;
+    }
+
+    .placards-container {
+      margin-top: 0;
+      gap: 0;
+    }
+
+    .placard {
+      box-shadow: none;
+      width: 8.5in;
+      height: 11in;
+      margin: 0;
+      page-break-after: always;
+    }
+
+    .placard:last-child {
+      page-break-after: auto;
+    }
+  }
+
+  @page {
+    size: 8.5in 11in;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <h1>Community Sponsor Placards Preview</h1>
+  <button onclick="window.print()">Print All Placards</button>
+</div>
+
+<div class="placards-container">
+
+  <!-- 1. Hawaii Women in Tech -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/HWIT_Black_logo.png" alt="Hawaii Women in Tech">
+    </div>
+    <div class="sponsor-name">Hawaii Women in Tech</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 2. NimbleBrain -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/nimblebrain_logo_color.png" alt="NimbleBrain">
+    </div>
+    <div class="sponsor-name">NimbleBrain</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 3. Infra Garden -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/IG_Secondary_logo.png" alt="Infra Garden">
+    </div>
+    <div class="sponsor-name">Infra Garden</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 4. Netcom -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/netcom_logo.png" alt="Netcom">
+    </div>
+    <div class="sponsor-name">Netcom</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 5. Path -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/path_logo.png" alt="Path">
+    </div>
+    <div class="sponsor-name">Path</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 6. Big Island Tech -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-photo-area">
+      <img class="photo" src="images/logos/bigislandtech_meetup.webp" alt="Big Island Tech Meetup">
+      <img class="logo" src="images/logos/bigislandtech_logotype.png" alt="Big Island Tech">
+    </div>
+    <div class="sponsor-name small">bigislandtech.org</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 7. HTDC & HCAI (shared sponsorship) -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area dual">
+      <div class="dual-logo">
+        <img src="images/logos/HCAI-Logo-Transparent.png" alt="Hawaii Center for AI">
+      </div>
+      <div class="dual-separator"></div>
+      <div class="dual-logo">
+        <img src="images/logos/htdc_logo.png" alt="HTDC">
+      </div>
+    </div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 9. Waiakea Hawaiian Volcanic Water -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/waiakea_logo_blue.svg" alt="Waiakea Hawaiian Volcanic Water">
+    </div>
+    <div class="sponsor-name">Waiakea Hawaiian Volcanic Water</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- KTS - Kama'aina Tech Solutions -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/kamaaina_tech_solutions_logo.png" alt="Kama'aina Tech Solutions">
+    </div>
+    <div class="sponsor-name">Kama'aina Tech Solutions</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- Kealani Solutions -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/kealani_solutions_black.png" alt="Kealani Solutions">
+    </div>
+    <div class="sponsor-name">Kealani Solutions</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- Mayu Systems -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/mayu_systems_logo_v2.png" alt="Mayu Systems">
+    </div>
+    <div class="sponsor-name">Mayu Systems</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+  <!-- 10. IEEE Island of Hawaii -->
+  <div class="placard">
+    <span class="tier-label">Community Sponsor</span>
+    <div class="sponsor-logo-area">
+      <img src="images/logos/ieee_logo.png" alt="IEEE Island of Hawaii">
+    </div>
+    <div class="sponsor-name">IEEE Island of Hawaii</div>
+    <div class="placard-banner">
+      <img src="images/logos/event_logo.png" alt="Hawaii Island AI Summit">
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
